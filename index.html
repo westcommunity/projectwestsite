@@ -302,17 +302,41 @@
         <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot Enlarged">
     </div>
 
-    <!-- Добавленный блок пополнения Steam -->
-    <section class="emulator-section">
-    <h2 class="text-2xl font-bold mb-6" style="text-align: center;">Пополни кошелёк Steam</h2>
-    <iframe class="MobiMoneyPage_steamIframe__h2Vl0" 
-            id="tswframe" 
-            src="https://igrovoi-rt.mobi-money.ru/pay/article/al_steam_rt_ia_sbp" 
-            title="Пополни кошелек Steam на Игровом от Ростелеком" 
-            scrolling="no" 
-            style="overflow: hidden; height: 986px; width: 100%; max-width: 900px; border: none; border-radius: 8px; margin: 0 auto; display: block;">
-    </iframe>
-</section>
+    <!-- Steam пополнение с iframe -->
+  <section class="py-20 px-4 text-center">
+    <h2 class="text-2xl font-bold mb-6">Пополни кошелёк Steam</h2>
+
+    <iframe 
+      id="tswframe"
+      class="transition-height duration-500"
+      src="https://igrovoi-rt.mobi-money.ru/pay/article/al_steam_rt_ia_sbp"
+      title="Пополни кошелек Steam на Игровом от Ростелеком"
+      scrolling="no"
+      style="height: 768px; width: 100%; max-width: 900px; border: none; border-radius: 8px; margin: 0 auto; display: block;"
+    ></iframe>
+
+    <div class="mt-6 text-center">
+      <button 
+        id="toggleBtn"
+        class="bg-white text-black font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-200 transition duration-300"
+      >
+        Дальше
+      </button>
+    </div>
+
+    <script>
+      const iframe = document.getElementById('tswframe');
+      const btn = document.getElementById('toggleBtn');
+
+      let expanded = false;
+
+      btn.addEventListener('click', () => {
+        expanded = !expanded;
+        iframe.style.height = expanded ? '986px' : '768px';
+        btn.textContent = expanded ? 'Скрыть' : 'Дальше';
+      });
+    </script>
+  </section>
 
 
     <footer class="footer">
