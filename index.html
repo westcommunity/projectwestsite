@@ -42,35 +42,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project West</title>
+    <title>Project West - WPlayer Emulator</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #0f0f0f;
+            background-color: #000000;
             color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Helvetica Neue', sans-serif;
             margin: 0;
             overflow-x: hidden;
         }
         .navbar {
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
+            background-color: #000000;
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 10;
-            padding: 1rem 2rem;
+            z-index: 20;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #333333;
         }
         .navbar a {
             color: #ffffff;
             text-decoration: none;
-            margin: 0 1rem;
-            font-weight: 500;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
             transition: color 0.3s ease;
         }
         .navbar a:hover {
             color: #cccccc;
+        }
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 21;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background-color: #ffffff;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 64px;
+            left: 0;
+            width: 100%;
+            background-color: #000000;
+            padding: 1.5rem;
+            border-radius: 0 0 12px 12px;
         }
         .hero-section {
             min-height: 100vh;
@@ -78,106 +121,191 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(15,15,15,1));
+            background-color: #000000;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 1s ease-in;
         }
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%;
-            height: 80%;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0) 70%);
-            transform: translate(-50%, -50%);
-            animation: glow 8s infinite ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05), rgba(0,0,0,0));
+            animation: wave 15s infinite ease-in-out;
             z-index: -1;
-            pointer-events: none;
         }
-        @keyframes glow {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.3; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+        @keyframes wave {
+            0% { transform: translateY(0); opacity: 0.4; }
+            50% { transform: translateY(20px); opacity: 0.2; }
+            100% { transform: translateY(0); opacity: 0.4; }
         }
         .btn {
             transition: all 0.3s ease;
-            border: 2px solid #ffffff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
+            padding: 0.9rem 3rem;
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 1.1rem;
             display: inline-block;
             text-decoration: none;
             color: #ffffff;
-            margin: 0.5rem;
+            margin: 0.75rem;
             position: relative;
             overflow: hidden;
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            animation: fadeIn 1.2s ease-in;
         }
         .btn:hover {
-            background-color: #ffffff;
-            color: #0f0f0f;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
-        }
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        .btn:hover::after {
-            left: 100%;
+            background-color: #333333;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.1);
         }
         .logo {
-            font-size: 3.5rem;
-            font-weight: 800;
+            font-size: 5rem;
+            font-weight: 700;
             letter-spacing: -0.05em;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, #ffffff, #cccccc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 2.5rem;
+            color: #ffffff;
+            animation: fadeIn 1s ease-in;
+        }
+        .emulator-section {
+            padding: 5rem 2rem;
+            background-color: #000000;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .emulator-content {
+            max-width: 1200px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            margin: 0 auto;
+        }
+        .emulator-text {
+            text-align: left;
+            max-width: 500px;
+        }
+        .emulator-image {
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #333333;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .emulator-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(255,255,255,0.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 30;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .modal-close:hover {
+            color: #cccccc;
         }
         .footer {
-            background-color: #0f0f0f;
-            padding: 2rem;
+            background-color: #000000;
+            padding: 2.5rem;
             text-align: center;
-            border-top: 1px solid #333;
+            border-top: 1px solid #333333;
         }
         .footer a {
-            color: #cccccc;
+            color: #_ACTIVITY;
             text-decoration: none;
-            margin: 0 0.5rem;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
         .footer a:hover {
             color: #ffffff;
         }
-        @media (max-width: 640px) {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 1024px) {
+            .emulator-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .emulator-text {
+                text-align: center;
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links a {
+                margin: 0.75rem 0;
+                font-size: 1.2rem;
+            }
             .logo {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
             }
             .btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
+                padding: 0.6rem 2rem;
+                font-size: 1rem;
             }
-            .navbar a {
-                margin: 0 0.5rem;
-                font-size: 0.875rem;
+            .emulator-image {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="font-bold text-xl">Project West</a>
-            <div>
-                <a href="#home">Главная</a>
-                <a href="https://t.me/projectwest" target="_blank">Telegram</a>
-                <a href="https://t.me/c/2621669532/475" target="_blank">Скачать</a>
+            <a href="#" class="logo" aria-label="Project West Home">Project West</a>
+            <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" aria-label="Go to Home">Главная</a>
+                <a href="#emulator" aria-label="View Emulator">Эмулятор</a>
+                <a href="https://t.me/projectwest" target="_blank" aria-label="Join Telegram">Telegram</a>
+                <a href="https://t.me/c/2621669532/475" target="_blank" aria-label="Download WPlayer">Скачать</a>
             </div>
         </div>
     </nav>
@@ -185,22 +313,57 @@
     <section id="home" class="hero-section">
         <div>
             <h1 class="logo">Project West</h1>
-            <p class="text-lg mb-8 opacity-80 max-w-md mx-auto">
-                Погрузитесь в захватывающее игровое приключение. Присоединяйтесь к нашему сообществу и испытайте Project West с WPlayer.
+            <p class="text-xl mb-10 opacity-80 max-w-lg mx-auto">
+                WPlayer — эмулятор нового поколения, превосходящий Bluestacks по скорости, удобству и производительности.
             </p>
-            <div class="flex justify-center space-x-4">
-                <a href="https://t.me/projectwest" target="_blank" class="btn">Присоединиться к Telegram</a>
-                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn">Скачать WPlayer</a>
+            <div class="flex justify-center space-x-6">
+                <a href="https://t.me/projectwest" target="_blank" class="btn" aria-label="Join our Telegram community">Присоединиться к Telegram</a>
+                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn" aria-label="Download WPlayer emulator">Скачать WPlayer</a>
             </div>
         </div>
     </section>
 
+    <section id="emulator" class="emulator-section">
+        <div class="emulator-content">
+            <div class="emulator-text">
+                <h2 class="text-3xl font-bold mb-6" style="animation: fadeIn 1s ease-in;">Эмулятор WPlayer</h2>
+                <p class="text-lg mb-10 opacity-80" style="animation: fadeIn 1.2s ease-in;">
+                    WPlayer — мощный и интуитивный эмулятор для запуска ваших любимых игр с непревзойденной производительностью.
+                </p>
+                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn" aria-label="Download WPlayer emulator" style="animation: fadeIn 1.6s ease-in; margin-top: 2.5rem;">Скачать эмулятор</a>
+            </div>
+            <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot" class="emulator-image" onclick="openModal()" style="animation: fadeIn 1.4s ease-in;">
+        </div>
+    </section>
+
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot Enlarged">
+    </div>
+
     <footer class="footer">
         <p>&copy; 2025 Project West. Все права защищены.</p>
-        <div class="mt-2">
-            <a href="https://t.me/projectwest" target="_blank">Telegram</a>
-            <a href="https://t.me/c/2621669532/475" target="_blank">Скачать WPlayer</a>
+        <div class="mt-3">
+            <a href="https://t.me/projectwest" target="_blank" aria-label="Join Telegram">Telegram</a>
+            <a href="https://t.me/c/2621669532/475" target="_blank" aria-label="Download WPlayer">Скачать WPlayer</a>
         </div>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        function openModal() {
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
