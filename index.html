@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -293,19 +254,19 @@
     </style>
 </head>
 <body>
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <nav class="navbar">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="logo" aria-label="Project West Home">Project West</a>
-            <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            <a href="#" class="logo">Project West</a>
+            <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             <div class="nav-links">
-                <a href="#home" aria-label="Go to Home">Главная</a>
-                <a href="#emulator" aria-label="View Emulator">Эмулятор</a>
-                <a href="https://t.me/projectwest" target="_blank" aria-label="Join Telegram">Telegram</a>
-                <a href="https://t.me/c/2621669532/475" target="_blank" aria-label="Download WPlayer">Скачать</a>
+                <a href="#home">Главная</a>
+                <a href="#emulator">Эмулятор</a>
+                <a href="https://t.me/projectwest" target="_blank">Telegram</a>
+                <a href="https://t.me/c/2621669532/475" target="_blank">Скачать</a>
             </div>
         </div>
     </nav>
@@ -317,8 +278,8 @@
                 WPlayer — эмулятор нового поколения, превосходящий Bluestacks по скорости, удобству и производительности.
             </p>
             <div class="flex justify-center space-x-6">
-                <a href="https://t.me/projectwest" target="_blank" class="btn" aria-label="Join our Telegram community">Присоединиться к Telegram</a>
-                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn" aria-label="Download WPlayer emulator">Скачать WPlayer</a>
+                <a href="https://t.me/projectwest" target="_blank" class="btn">Присоединиться к Telegram</a>
+                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn">Скачать WPlayer</a>
             </div>
         </div>
     </section>
@@ -326,13 +287,13 @@
     <section id="emulator" class="emulator-section">
         <div class="emulator-content">
             <div class="emulator-text">
-                <h2 class="text-3xl font-bold mb-6" style="animation: fadeIn 1s ease-in;">Эмулятор WPlayer</h2>
-                <p class="text-lg mb-10 opacity-80" style="animation: fadeIn 1.2s ease-in;">
+                <h2 class="text-3xl font-bold mb-6">Эмулятор WPlayer</h2>
+                <p class="text-lg mb-10 opacity-80">
                     WPlayer — мощный и интуитивный эмулятор для запуска ваших любимых игр с непревзойденной производительностью.
                 </p>
-                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn" aria-label="Download WPlayer emulator" style="animation: fadeIn 1.6s ease-in; margin-top: 2.5rem;">Скачать эмулятор</a>
+                <a href="https://t.me/c/2621669532/475" target="_blank" class="btn">Скачать эмулятор</a>
             </div>
-            <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot" class="emulator-image" onclick="openModal()" style="animation: fadeIn 1.4s ease-in;">
+            <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot" class="emulator-image" onclick="openModal()">
         </div>
     </section>
 
@@ -341,11 +302,24 @@
         <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot Enlarged">
     </div>
 
+    <!-- Добавленный блок пополнения Steam -->
+    <section class="emulator-section">
+    <h2 class="text-2xl font-bold mb-6" style="text-align: center;">Пополни кошелёк Steam</h2>
+    <iframe class="MobiMoneyPage_steamIframe__h2Vl0" 
+            id="tswframe" 
+            src="https://igrovoi-rt.mobi-money.ru/pay/article/al_steam_rt_ia_sbp" 
+            title="Пополни кошелек Steam на Игровом от Ростелеком" 
+            scrolling="no" 
+            style="overflow: hidden; height: 986px; width: 100%; max-width: 900px; border: none; border-radius: 8px; margin: 0 auto; display: block;">
+    </iframe>
+</section>
+
+
     <footer class="footer">
         <p>&copy; 2025 Project West. Все права защищены.</p>
         <div class="mt-3">
-            <a href="https://t.me/projectwest" target="_blank" aria-label="Join Telegram">Telegram</a>
-            <a href="https://t.me/c/2621669532/475" target="_blank" aria-label="Download WPlayer">Скачать WPlayer</a>
+            <a href="https://t.me/projectwest" target="_blank">Telegram</a>
+            <a href="https://t.me/c/2621669532/475" target="_blank">Скачать WPlayer</a>
         </div>
     </footer>
 
