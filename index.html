@@ -1,29 +1,439 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project West</title>
-
-  <!-- Favicon как эмодзи 🎮 -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🎮</text></svg>">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project West - WPlayer Emulator</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    }
+      /* Global Styles */
+      :root {
+          --background-color: #000; /* Глубокий черный фон */
+          --text-color: #fff; /* Чисто белый текст */
+          --primary-button-bg: #fff; /* Белая кнопка */
+          --primary-button-text: #000; /* Черный текст на кнопке */
+          --secondary-button-bg: #080808; /* Очень темный серый для вторичной кнопки, почти черный */
+          --secondary-button-text: #fff; /* Белый текст на вторичной кнопке */
+          --border-color: rgba(255, 255, 255, 0.05); /* Едва заметная белая граница */
+          --shadow-color: rgba(255, 255, 255, 0.02); /* Очень мягкая, почти невидимая тень */
+          --glow-color: rgba(255, 255, 255, 0.06); /* Очень тонкое белое свечение */
+      }
 
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100%;
-    }
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+          margin: 0;
+          padding: 0;
+          background-color: var(--background-color);
+          color: var(--text-color);
+          line-height: 1.6;
+          scroll-behavior: smooth; /* Smooth scrolling for internal links */
+      }
+
+      a {
+          color: var(--text-color);
+          text-decoration: none;
+          transition: opacity 0.3s ease, transform 0.3s ease; /* Более плавные переходы */
+      }
+
+      a:hover {
+          opacity: 0.7;
+          transform: translateY(-2px); /* Более выраженный подъем */
+      }
+
+      .container {
+          max-width: 1300px; /* Увеличенная максимальная ширина контейнера */
+          margin: 0 auto;
+          padding: 0 50px; /* Еще увеличенные отступы по бокам */
+      }
+
+      section {
+          padding: 160px 0; /* Значительно увеличенные вертикальные отступы */
+          text-align: center;
+      }
+
+      h1, h2, h3 {
+          margin-top: 0;
+          margin-bottom: 30px; /* Увеличенный отступ после заголовков */
+          font-weight: 700; /* Жирный шрифт для заголовков */
+      }
+
+      h1 {
+          font-size: 5rem; /* Еще увеличенный размер заголовка */
+          line-height: 1.1;
+          letter-spacing: -0.04em; /* Более выраженный отрицательный кернинг */
+      }
+
+      h2 {
+          font-size: 3.5rem; /* Еще увеличенный размер подзаголовка */
+          letter-spacing: -0.03em;
+      }
+
+      p {
+          font-size: 1.3rem; /* Еще увеличенный размер текста */
+          line-height: 1.8; /* Увеличенный межстрочный интервал для читаемости */
+          margin-bottom: 50px; /* Значительно увеличенный отступ после параграфов */
+          max-width: 900px; /* Увеличенная максимальная ширина текста */
+          margin-left: auto;
+          margin-right: auto;
+          color: rgba(255, 255, 255, 0.75); /* Чуть менее яркий белый для основного текста */
+      }
+
+      .button {
+          display: inline-block;
+          padding: 18px 36px; /* Еще увеличенные отступы для кнопок */
+          border-radius: 16px; /* Более скругленные углы */
+          font-weight: 600; /* Жирный шрифт для кнопок */
+          font-size: 1.1rem; /* Немного увеличенный размер шрифта */
+          cursor: pointer;
+          transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+          border: 1px solid transparent;
+          text-align: center;
+      }
+
+      .button:hover {
+          transform: translateY(-4px); /* Более выраженный подъем */
+          box-shadow: 0 10px 30px var(--shadow-color); /* Более выраженная, но мягкая тень */
+      }
+
+      .button-primary {
+          background-color: var(--primary-button-bg);
+          color: var(--primary-button-text);
+          border-color: var(--primary-button-bg);
+      }
+
+      .button-secondary {
+          background-color: var(--secondary-button-bg);
+          color: var(--secondary-button-text);
+          border: 1px solid var(--border-color);
+      }
+
+      .button-group {
+          display: flex;
+          justify-content: center;
+          gap: 30px; /* Увеличенный зазор между кнопками */
+          flex-wrap: wrap;
+      }
+
+      /* Header/Navigation */
+      header {
+          background-color: var(--background-color);
+          padding: 30px 0; /* Увеличенный отступ в хедере */
+          border-bottom: 1px solid var(--border-color);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+      }
+
+      .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      .logo {
+          font-size: 2.2rem; /* Увеличенный размер логотипа */
+          font-weight: 800; /* Очень жирный шрифт для логотипа */
+          color: var(--text-color);
+          letter-spacing: -0.05em; /* Более выраженный отрицательный кернинг */
+      }
+
+      .nav-links {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          gap: 50px; /* Увеличенный зазор между ссылками */
+      }
+
+      .nav-links a {
+          font-weight: 500;
+          font-size: 1.15rem; /* Немного увеличенный размер шрифта ссылок */
+      }
+
+      .hamburger-menu {
+          display: none;
+          flex-direction: column;
+          cursor: pointer;
+          gap: 8px; /* Увеличенный зазор между полосками */
+          z-index: 1001;
+      }
+
+      .hamburger-menu .bar {
+          width: 32px; /* Увеличенная ширина полосок */
+          height: 3px;
+          background-color: var(--text-color);
+          transition: all 0.3s ease;
+          border-radius: 2px;
+      }
+
+      /* Hamburger animation */
+      .hamburger-menu.open .bar:nth-child(1) {
+          transform: translateY(11px) rotate(45deg);
+      }
+
+      .hamburger-menu.open .bar:nth-child(2) {
+          opacity: 0;
+      }
+
+      .hamburger-menu.open .bar:nth-child(3) {
+          transform: translateY(-11px) rotate(-45deg);
+      }
+
+      /* Mobile Navigation */
+      @media (max-width: 768px) {
+          .container {
+              padding: 0 20px;
+          }
+          .nav-links {
+              top: 90px; /* Adjust based on header height */
+              padding: 40px 0;
+              gap: 25px;
+          }
+
+          h1 {
+              font-size: 3.5rem;
+          }
+
+          h2 {
+              font-size: 2.5rem;
+          }
+
+          p {
+              font-size: 1.1rem;
+          }
+
+          .button {
+              padding: 16px 30px;
+              font-size: 1rem;
+          }
+
+          .button-group {
+              flex-direction: column;
+              gap: 20px;
+          }
+
+          section {
+              padding: 100px 0;
+          }
+      }
+
+      /* Hero Section */
+      #home {
+          padding: 200px 0; /* Еще больше отступа для герой-секции */
+          background-color: var(--background-color);
+      }
+
+      /* Emulator Section */
+      #emulator {
+          background-color: #050505; /* Очень темный серый, почти черный, для легкого контраста */
+          border-top: 1px solid var(--border-color);
+          border-bottom: 1px solid var(--border-color);
+      }
+
+      .emulator-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 80px; /* Значительно увеличенный зазор между текстом и изображением */
+      }
+
+      .emulator-image-wrapper {
+          position: relative;
+          display: inline-block;
+          border-radius: 25px; /* Еще более скругленные углы изображения */
+          overflow: hidden;
+          box-shadow: 0 20px 50px var(--shadow-color); /* Более выраженная, но мягкая тень */
+          transition: box-shadow 0.5s ease; /* Более плавный переход тени */
+      }
+
+      .emulator-image-wrapper:hover {
+          box-shadow: 0 25px 60px var(--glow-color); /* Более выраженное, но тонкое свечение при наведении */
+      }
+
+      .emulator-image {
+          max-width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 25px;
+      }
+
+      @media (min-width: 769px) {
+          .emulator-content {
+              flex-direction: row;
+              text-align: left;
+              justify-content: center;
+          }
+
+          .emulator-text {
+              flex: 1;
+              padding-right: 80px; /* Значительно увеличенный отступ справа */
+          }
+
+          .emulator-image-wrapper {
+              flex: 1;
+              max-width: 700px; /* Еще увеличенный размер изображения на десктопе */
+          }
+      }
+
+      /* Steam Section */
+      #steam {
+          background-color: var(--background-color);
+      }
+
+      #steam .iframe-container {
+          margin-top: 60px; /* Увеличенный отступ сверху */
+          position: relative;
+          width: 100%;
+          max-width: 700px; /* Еще увеличенная ширина iframe */
+          margin-left: auto;
+          margin-right: auto;
+          border-radius: 20px; /* Более скругленные углы iframe */
+          overflow: hidden;
+          box-shadow: 0 10px 30px var(--shadow-color); /* Более выраженная, но мягкая тень */
+          transition: height 0.3s ease;
+      }
+
+      #steam iframe {
+          width: 100%;
+          border: none;
+          display: block;
+          transition: height 0.3s ease;
+      }
+
+      #steam .iframe-toggle-button {
+          margin-top: 40px; /* Увеличенный отступ сверху */
+          background-color: var(--secondary-button-bg);
+          color: var(--secondary-button-text);
+          border: 1px solid var(--border-color);
+      }
+
+      /* Footer */
+      footer {
+          background-color: #000; /* Черный фон для футера */
+          color: rgba(255, 255, 255, 0.6); /* Чуть менее яркий белый для текста футера */
+          padding: 70px 0; /* Значительно увеличенный отступ в футере */
+          text-align: center;
+          font-size: 1rem;
+          border-top: 1px solid var(--border-color); /* Едва заметная граница сверху */
+      }
+
+      footer a {
+          color: rgba(255, 255, 255, 0.8); /* Чуть более яркие ссылки в футере */
+          margin: 0 20px; /* Увеличенный зазор между ссылками */
+      }
+
+      footer .footer-links {
+          margin-top: 25px;
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+          flex-wrap: wrap;
+      }
   </style>
 </head>
 <body>
-  <iframe src="https://v0-modern-html-website-azure.vercel.app/" title="Встроенный сайт" allowfullscreen></iframe>
+  <header>
+      <div class="container navbar">
+          <a href="#" class="logo">Project West</a>
+          <nav>
+              <ul class="nav-links">
+                  <li><a href="#home">Главная</a></li>
+                  <li><a href="#emulator">Эмулятор</a></li>
+                  <li><a href="#steam">Пополнить Steam</a></li>
+                  <li><a href="https://t.me/your_telegram_link" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                  <li><a href="https://your_download_link.com" target="_blank" rel="noopener noreferrer">Скачать</a></li>
+              </ul>
+          </nav>
+          <div class="hamburger-menu">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+          </div>
+      </div>
+  </header>
+
+  <main>
+      <section id="home">
+          <div class="container">
+              <h1>Project West</h1>
+              <p>WPlayer — эмулятор нового поколения, превосходящий Bluestacks по скорости, удобству и производительности.</p>
+              <div class="button-group">
+                  <a href="https://t.me/your_telegram_link" target="_blank" rel="noopener noreferrer" class="button button-primary">Присоединиться к Telegram</a>
+                  <a href="https://your_download_link.com" target="_blank" rel="noopener noreferrer" class="button button-secondary">Скачать WPlayer</a>
+              </div>
+          </div>
+      </section>
+
+      <section id="emulator">
+          <div class="container emulator-content">
+              <div class="emulator-text">
+                  <h2>Эмулятор WPlayer</h2>
+                  <p>WPlayer — мощный и интуитивный эмулятор для запуска ваших любимых игр с непревзойденной производительностью.</p>
+                  <a href="https://your_emulator_download_link.com" target="_blank" rel="noopener noreferrer" class="button button-primary">Скачать эмулятор</a>
+              </div>
+              <div class="emulator-image-wrapper">
+                  <img src="https://i.postimg.cc/KvCZgFpc/06-08-2025-10-33-55.jpg" alt="WPlayer Emulator Screenshot" class="emulator-image">
+              </div>
+          </div>
+      </section>
+
+      <section id="steam">
+          <div class="container">
+              <h2>Пополни кошелёк Steam</h2>
+              <p>Пополнение без комиссии и моментальное!</p>
+              <div class="iframe-container">
+                  <iframe id="steamIframe" src="https://igrovoi-rt.mobi-money.ru/pay/article/al_steam_rt_ia_sbp" title="Пополни кошелек Steam на Игровом от Ростелеком" height="648" scrolling="no"></iframe>
+              </div>
+              <button id="toggleIframeHeight" class="button iframe-toggle-button">Дальше</button>
+          </div>
+      </section>
+  </main>
+
+  <footer>
+      <div class="container">
+          <p>© 2025 Project West. Все права защищены.</p>
+          <div class="footer-links">
+              <a href="https://t.me/your_telegram_link" target="_blank" rel="noopener noreferrer">Telegram</a>
+              <a href="https://your_download_link.com" target="_blank" rel="noopener noreferrer">Скачать WPlayer</a>
+          </div>
+      </div>
+  </footer>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          const hamburgerMenu = document.querySelector('.hamburger-menu');
+          const navLinks = document.querySelector('.nav-links');
+          const steamIframe = document.getElementById('steamIframe');
+          const toggleIframeButton = document.getElementById('toggleIframeHeight');
+
+          // Hamburger menu toggle for mobile
+          hamburgerMenu.addEventListener('click', () => {
+              navLinks.classList.toggle('active');
+              hamburgerMenu.classList.toggle('open');
+          });
+
+          // Auto-close menu on link click (for mobile)
+          navLinks.querySelectorAll('a').forEach(link => {
+              link.addEventListener('click', () => {
+                  if (navLinks.classList.contains('active')) {
+                      navLinks.classList.remove('active');
+                      hamburgerMenu.classList.remove('open');
+                  }
+              });
+          });
+
+          // Iframe height toggle for Steam section
+          let isIframeExpanded = false;
+          toggleIframeButton.addEventListener('click', () => {
+              if (isIframeExpanded) {
+                  steamIframe.style.height = '648px';
+                  toggleIframeButton.textContent = 'Дальше';
+              } else {
+                  steamIframe.style.height = '986px';
+                  toggleIframeButton.textContent = 'Скрыть';
+              }
+              isIframeExpanded = !isIframeExpanded;
+          });
+      });
+  </script>
 </body>
 </html>
