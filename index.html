@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project West - WPlayer Emulator</title>
+    <!-- Yandex.RTB -->
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90' font-family='Arial, sans-serif'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E">
     <style>
         /* Import premium fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
         /* Global Variables */
         :root {
             --background: #000000;
@@ -24,19 +27,16 @@
             --glow: rgba(255, 255, 255, 0.08);
             --grid-color: rgba(255, 255, 255, 0.02);
         }
-
         /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
             font-size: 16px;
         }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--background);
@@ -47,7 +47,6 @@
             -moz-osx-font-smoothing: grayscale;
             position: relative;
         }
-
         /* Premium Grid Background */
         body::before {
             content: '';
@@ -63,7 +62,6 @@
             pointer-events: none;
             z-index: 1;
         }
-
         /* Geometric Lines */
         .geometric-lines {
             position: fixed;
@@ -75,14 +73,12 @@
             z-index: 1;
             opacity: 0.3;
         }
-
         .geometric-lines::before,
         .geometric-lines::after {
             content: '';
             position: absolute;
             background: linear-gradient(45deg, transparent 49%, rgba(255,255,255,0.02) 50%, transparent 51%);
         }
-
         .geometric-lines::before {
             top: 20%;
             left: 10%;
@@ -90,7 +86,6 @@
             height: 300px;
             transform: rotate(45deg);
         }
-
         .geometric-lines::after {
             bottom: 20%;
             right: 10%;
@@ -98,52 +93,43 @@
             height: 400px;
             transform: rotate(-30deg);
         }
-
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 4px;
         }
-
         ::-webkit-scrollbar-track {
             background: var(--background);
         }
-
         ::-webkit-scrollbar-thumb {
             background: var(--border);
             border-radius: 2px;
         }
-
         ::-webkit-scrollbar-thumb:hover {
             background: var(--border-hover);
         }
-
         /* Typography */
         h1, h2, h3, h4, h5, h6 {
             font-weight: 700;
             line-height: 1.1;
             letter-spacing: -0.03em;
         }
-
         /* Desktop Typography */
         h1 {
             font-size: 6.5rem;
             font-weight: 800;
             letter-spacing: -0.05em;
         }
-
         h2 {
             font-size: 4.5rem;
             font-weight: 700;
             letter-spacing: -0.04em;
         }
-
         p {
             font-size: 1.2rem;
             line-height: 1.7;
             color: var(--text-secondary);
             font-weight: 400;
         }
-
         /* Container */
         .container {
             max-width: 1400px;
@@ -152,7 +138,6 @@
             position: relative;
             z-index: 2;
         }
-
         /* Header */
         header {
             position: fixed;
@@ -165,19 +150,16 @@
             border-bottom: 1px solid var(--border);
             transition: all 0.4s ease;
         }
-
         header.scrolled {
             background: rgba(0, 0, 0, 0.9);
             border-bottom-color: var(--border-hover);
         }
-
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 80px;
         }
-
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
@@ -186,19 +168,16 @@
             letter-spacing: -0.02em;
             transition: all 0.3s ease;
         }
-
         .logo:hover {
             color: var(--text-secondary);
             transform: translateY(-1px);
         }
-
         .nav-links {
             display: flex;
             list-style: none;
             gap: 3rem;
             align-items: center;
         }
-
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
@@ -208,11 +187,9 @@
             position: relative;
             padding: 0.5rem 0;
         }
-
         .nav-links a:hover {
             color: var(--text-primary);
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -223,11 +200,9 @@
             background: var(--accent);
             transition: width 0.3s ease;
         }
-
         .nav-links a:hover::after {
             width: 100%;
         }
-
         /* Premium Badge */
         .premium-badge {
             display: inline-flex;
@@ -244,18 +219,15 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
-
         .premium-badge:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--border-hover);
             transform: translateY(-2px);
         }
-
         .premium-badge::before {
             content: '⚡';
             font-size: 1rem;
         }
-
         /* Mobile Menu */
         .hamburger {
             display: none;
@@ -263,7 +235,6 @@
             cursor: pointer;
             gap: 4px;
         }
-
         .hamburger span {
             width: 24px;
             height: 1px;
@@ -271,19 +242,15 @@
             transition: all 0.3s ease;
             border-radius: 1px;
         }
-
         .hamburger.active span:nth-child(1) {
             transform: rotate(45deg) translate(6px, 6px);
         }
-
         .hamburger.active span:nth-child(2) {
             opacity: 0;
         }
-
         .hamburger.active span:nth-child(3) {
             transform: rotate(-45deg) translate(6px, -6px);
         }
-
         /* Premium Buttons */
         .btn {
             display: inline-flex;
@@ -302,7 +269,6 @@
             min-width: 180px;
             backdrop-filter: blur(10px);
         }
-
         .btn::before {
             content: '';
             position: absolute;
@@ -313,49 +279,41 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             transition: left 0.6s ease;
         }
-
         .btn:hover::before {
             left: 100%;
         }
-
         .btn-primary {
             background: var(--accent);
             color: var(--background);
             border: 1px solid var(--accent);
         }
-
         .btn-primary:hover {
             background: var(--accent-hover);
             transform: translateY(-3px);
             box-shadow: 0 20px 60px rgba(255, 255, 255, 0.15);
         }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-primary);
             border: 1px solid var(--border);
         }
-
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--border-hover);
             transform: translateY(-3px);
             box-shadow: 0 20px 60px var(--glow);
         }
-
         .btn-group {
             display: flex;
             gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
         }
-
         /* Sections */
         section {
             padding: 12rem 0;
             position: relative;
         }
-
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -366,13 +324,11 @@
             position: relative;
             overflow: hidden;
         }
-
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 1000px;
         }
-
         .hero h1 {
             margin-bottom: 2rem;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
@@ -380,7 +336,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 4rem;
@@ -389,12 +344,10 @@
             margin-right: auto;
             font-weight: 400;
         }
-
         /* Platform Icons */
         .platforms {
             margin-top: 6rem;
         }
-
         .platforms-title {
             font-size: 0.9rem;
             color: var(--text-muted);
@@ -403,7 +356,6 @@
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
-
         .platforms-grid {
             display: flex;
             justify-content: center;
@@ -411,7 +363,6 @@
             flex-wrap: wrap;
             align-items: center;
         }
-
         .platform-icon {
             width: 60px;
             height: 60px;
@@ -424,24 +375,20 @@
             transition: all 0.4s ease;
             backdrop-filter: blur(10px);
         }
-
         .platform-icon:hover {
             border-color: var(--border-hover);
             background: rgba(255, 255, 255, 0.05);
             transform: translateY(-5px);
         }
-
         .platform-icon svg {
             width: 28px;
             height: 28px;
             fill: var(--text-secondary);
             transition: fill 0.3s ease;
         }
-
         .platform-icon:hover svg {
             fill: var(--text-primary);
         }
-
         /* Windows Version Badge */
         .windows-version {
             display: inline-flex;
@@ -457,13 +404,11 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
-
         .windows-version:hover {
             background: rgba(255, 255, 255, 0.06);
             border-color: var(--border-hover);
             transform: translateY(-2px);
         }
-
         /* Emulator Section */
         .emulator {
             background: rgba(255, 255, 255, 0.01);
@@ -471,25 +416,21 @@
             border-bottom: 1px solid var(--border);
             backdrop-filter: blur(10px);
         }
-
         .emulator-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8rem;
             align-items: center;
         }
-
         .emulator-text h2 {
             margin-bottom: 2rem;
             color: var(--text-primary);
         }
-
         .emulator-text p {
             margin-bottom: 3rem;
             font-size: 1.2rem;
             line-height: 1.8;
         }
-
         .emulator-image {
             position: relative;
             border-radius: 24px;
@@ -498,29 +439,24 @@
             background: rgba(255, 255, 255, 0.02);
             transition: all 0.6s ease;
         }
-
         .emulator-image:hover {
             transform: translateY(-10px);
             border-color: var(--border-hover);
             box-shadow: 0 40px 120px rgba(0, 0, 0, 0.4);
         }
-
         .emulator-image img {
             width: 100%;
             height: auto;
             display: block;
             transition: transform 0.6s ease;
         }
-
         .emulator-image:hover img {
             transform: scale(1.02);
         }
-
         /* Steam Section */
         .steam {
             text-align: center;
         }
-
         .steam h2 {
             margin-bottom: 1.5rem;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
@@ -528,12 +464,10 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .steam p {
             margin-bottom: 4rem;
             font-size: 1.2rem;
         }
-
         .iframe-container {
             max-width: 900px;
             margin: 0 auto 3rem;
@@ -544,13 +478,11 @@
             transition: all 0.4s ease;
             backdrop-filter: blur(10px);
         }
-
         .iframe-container:hover {
             border-color: var(--border-hover);
             transform: translateY(-5px);
             box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
         }
-
         .iframe-container iframe {
             width: 100%;
             border: none;
@@ -558,6 +490,22 @@
             transition: height 0.5s ease;
         }
 
+        /* Yandex.RTB Ad Block Styles */
+        .yandex-rtb-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        #yandex_rtb_R-A-16665345-1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px; /* Adjust based on expected ad size */
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+        }
         /* Footer */
         footer {
             background: var(--background);
@@ -565,21 +513,18 @@
             padding: 6rem 0;
             text-align: center;
         }
-
         footer p {
             color: var(--text-muted);
             margin-bottom: 2.5rem;
             font-size: 0.95rem;
             font-weight: 400;
         }
-
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 3rem;
             flex-wrap: wrap;
         }
-
         .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
@@ -587,34 +532,27 @@
             font-size: 0.95rem;
             transition: all 0.3s ease;
         }
-
         .footer-links a:hover {
             color: var(--text-primary);
             transform: translateY(-2px);
         }
-
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
             .container {
                 padding: 0 1.5rem;
             }
-
             h1 {
                 font-size: 2.8rem;
             }
-
             h2 {
                 font-size: 2.2rem;
             }
-
             p {
                 font-size: 1rem;
             }
-
             .navbar {
                 height: 70px;
             }
-
             .nav-links {
                 display: none;
                 position: absolute;
@@ -629,71 +567,64 @@
                 border-bottom: 1px solid var(--border);
                 border-radius: 0 0 24px 24px;
             }
-
             .nav-links.active {
                 display: flex;
             }
-
             .hamburger {
                 display: flex;
             }
-
             section {
                 padding: 6rem 0;
             }
-
             .hero {
                 min-height: 90vh;
             }
-
             .hero p {
                 font-size: 1.1rem;
                 margin-bottom: 3rem;
             }
-
             .btn {
                 width: 100%;
                 max-width: 300px;
                 padding: 1rem 2rem;
             }
-
             .btn-group {
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
             }
-
             .emulator-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
                 text-align: center;
             }
-
             .platforms-grid {
                 gap: 1.5rem;
             }
-
             .platform-icon {
                 width: 50px;
                 height: 50px;
             }
-
             .platform-icon svg {
                 width: 24px;
                 height: 24px;
             }
-
             .windows-version {
                 padding: 0.5rem 1rem;
                 font-size: 0.8rem;
             }
-
             .iframe-container {
                 margin: 0 -1rem 2rem;
                 border-radius: 16px;
             }
+            .yandex-rtb-container {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            #yandex_rtb_R-A-16665345-1 {
+                min-height: 200px; /* Adjust for mobile */
+            }
         }
-
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -705,13 +636,11 @@
                 transform: translateY(0);
             }
         }
-
         .loading {
             opacity: 0;
             transform: translateY(40px);
             transition: all 1s ease;
         }
-
         .loading.loaded {
             opacity: 1;
             transform: translateY(0);
@@ -720,12 +649,10 @@
 </head>
 <body>
     <div class="geometric-lines"></div>
-
     <header id="header">
         <div class="container">
             <nav class="navbar">
                 <a href="#home" class="logo">Project West</a>
-                
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home">Главная</a></li>
                     <li><a href="#emulator">Эмулятор</a></li>
@@ -733,7 +660,6 @@
                     <li><a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer">Telegram</a></li>
                     <li><a href="https://t.me/c/2621669532/475" target="_blank" rel="noopener noreferrer">Скачать</a></li>
                 </ul>
-
                 <div class="hamburger" id="hamburger">
                     <span></span>
                     <span></span>
@@ -742,7 +668,6 @@
             </nav>
         </div>
     </header>
-
     <main>
         <section id="home" class="hero">
             <div class="container">
@@ -750,11 +675,8 @@
                     <div class="premium-badge">
                         №1 Эмулятор нового поколения
                     </div>
-                    
                     <h1>Быстро. Безопасно.</h1>
-                    
                     <p>Непревзойденная скорость, безопасность и надежность. Используйте лучший эмулятор, созданный на базе передовых технологий.</p>
-                    
                     <div class="btn-group">
                         <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                             Присоединиться к Telegram
@@ -763,7 +685,6 @@
                             Скачать WPlayer
                         </a>
                     </div>
-
                     <div class="platforms">
                         <div class="platforms-title">Доступно на Windows 10/11</div>
                         <div class="platforms-grid">
@@ -780,7 +701,6 @@
                 </div>
             </div>
         </section>
-
         <section id="emulator" class="emulator">
             <div class="container">
                 <div class="emulator-content">
@@ -798,12 +718,24 @@
             </div>
         </section>
 
+        <!-- Yandex.RTB R-A-16665345-1 -->
+        <div class="yandex-rtb-container">
+            <div id="yandex_rtb_R-A-16665345-1"></div>
+        </div>
+        <script>
+        window.yaContextCb.push(() => {
+            Ya.Context.AdvManager.render({
+                "blockId": "R-A-16665345-1",
+                "renderTo": "yandex_rtb_R-A-16665345-1"
+            })
+        })
+        </script>
+
         <section id="steam" class="steam">
             <div class="container">
                 <div class="loading">
                     <h2>Пополни кошелёк Steam</h2>
                     <p>Пополнение без комиссии и моментальное зачисление средств</p>
-                    
                     <div class="iframe-container">
                         <iframe 
                             id="steamIframe" 
@@ -813,7 +745,6 @@
                             scrolling="no">
                         </iframe>
                     </div>
-                    
                     <button id="toggleIframe" class="btn btn-secondary">
                         Развернуть
                     </button>
@@ -821,7 +752,6 @@
             </div>
         </section>
     </main>
-
     <footer>
         <div class="container">
             <p>© 2025 Project West. Все права защищены.</p>
@@ -831,7 +761,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Header scroll effect
@@ -843,16 +772,13 @@
                     header.classList.remove('scrolled');
                 }
             });
-
             // Mobile menu toggle
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('navLinks');
-            
             hamburger.addEventListener('click', function() {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
             });
-
             // Close mobile menu on link click
             navLinks.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', function() {
@@ -860,12 +786,10 @@
                     navLinks.classList.remove('active');
                 });
             });
-
             // Steam iframe toggle
             const steamIframe = document.getElementById('steamIframe');
             const toggleButton = document.getElementById('toggleIframe');
             let isExpanded = false;
-
             toggleButton.addEventListener('click', function() {
                 if (isExpanded) {
                     steamIframe.style.height = '648px';
@@ -876,13 +800,11 @@
                 }
                 isExpanded = !isExpanded;
             });
-
             // Loading animations with stagger
             const observerOptions = {
                 threshold: 0.1,
                 rootMargin: '0px 0px -50px 0px'
             };
-
             const observer = new IntersectionObserver(function(entries) {
                 entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
@@ -892,11 +814,9 @@
                     }
                 });
             }, observerOptions);
-
             document.querySelectorAll('.loading').forEach(el => {
                 observer.observe(el);
             });
-
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -910,7 +830,6 @@
                     }
                 });
             });
-
             // Parallax effect for geometric lines
             window.addEventListener('scroll', function() {
                 const scrolled = window.pageYOffset;
