@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project West - WPlayer Emulator</title>
+    <!-- Добавляем favicon в виде смайлика огонька -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
     <style>
         /* Import premium fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -48,20 +50,41 @@
             position: relative;
         }
 
-        /* Premium Grid Background */
-        body::before {
-            content: '';
+        /* Interactive Grid Background */
+        .grid-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
-                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
             background-size: 60px 60px;
             pointer-events: none;
+            z-index: -1;
+        }
+
+        .grid-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                300px circle at var(--x, 50%) var(--y, 50%),
+                rgba(255, 255, 255, 0.1),
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
             z-index: 1;
+        }
+
+        .grid-overlay:hover::after {
+            opacity: 1;
         }
 
         /* Geometric Lines */
@@ -257,32 +280,33 @@
         }
 
         /* Mobile Menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
 
-        .hamburger span {
-            width: 24px;
-            height: 1px;
-            background: var(--text-primary);
-            transition: all 0.3s ease;
-            border-radius: 1px;
-        }
+.hamburger span {
+    width: 24px;
+    height: 1px;
+    background: var(--text-primary);
+    transition: all 0.3s ease;
+    border-radius: 1px;
+}
 
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
+/* Состояние активного меню */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
 
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
 
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
 
         /* Premium Buttons */
         .btn {
@@ -358,13 +382,20 @@
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: 88vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             text-align: center;
             position: relative;
             overflow: hidden;
+            padding-top: 14rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 10rem;
+            }
         }
 
         .hero-content {
@@ -388,6 +419,17 @@
             margin-left: auto;
             margin-right: auto;
             font-weight: 400;
+        }
+
+        /* Убран градиент из hero */
+.hero::before {
+    display: none;
+}
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Platform Icons */
@@ -492,7 +534,7 @@
 
         .emulator-image {
             position: relative;
-            border-radius: 24px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border);
             background: rgba(255, 255, 255, 0.02);
@@ -514,48 +556,6 @@
 
         .emulator-image:hover img {
             transform: scale(1.02);
-        }
-
-        /* Steam Section */
-        .steam {
-            text-align: center;
-        }
-
-        .steam h2 {
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .steam p {
-            margin-bottom: 4rem;
-            font-size: 1.2rem;
-        }
-
-        .iframe-container {
-            max-width: 900px;
-            margin: 0 auto 3rem;
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.02);
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .iframe-container:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-5px);
-            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
-        }
-
-        .iframe-container iframe {
-            width: 100%;
-            border: none;
-            display: block;
-            transition: height 0.5s ease;
         }
 
         /* Footer */
@@ -687,11 +687,6 @@
                 padding: 0.5rem 1rem;
                 font-size: 0.8rem;
             }
-
-            .iframe-container {
-                margin: 0 -1rem 2rem;
-                border-radius: 16px;
-            }
         }
 
         /* Animations */
@@ -716,9 +711,83 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Standoff 2 Section */
+.standoff2 {
+    background: rgba(255, 255, 255, 0.01);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 8rem 0;
+}
+
+.standoff2-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.standoff2-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.standoff2-icon:hover {
+    transform: translateY(-5px);
+    border-color: var(--border-hover);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.standoff2-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.standoff2 h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    position: relative;
+    display: inline-block;
+}
+
+.standoff2 p {
+    margin-bottom: 2.5rem;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .standoff2-icon {
+        width: 100px;
+        height: 100px;
+    }
+
+    .standoff2 h2::after {
+        font-size: 1.2rem;
+    }
+}
     </style>
 </head>
 <body>
+    <div class="grid-overlay"></div>
     <div class="geometric-lines"></div>
 
     <header id="header">
@@ -729,9 +798,8 @@
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home">Главная</a></li>
                     <li><a href="#emulator">Эмулятор</a></li>
-                    <li><a href="#steam">Пополнить Steam</a></li>
+                    <li><a href="#support">Поддержка</a></li>
                     <li><a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer">Telegram</a></li>
-                    <li><a href="https://t.me/c/2621669532/475" target="_blank" rel="noopener noreferrer">Скачать</a></li>
                 </ul>
 
                 <div class="hamburger" id="hamburger">
@@ -747,19 +815,17 @@
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content loading">
-                    <div class="premium-badge">
-                        №1 Эмулятор нового поколения
                     </div>
                     
-                    <h1>Быстро. Безопасно.</h1>
+                    <h1>Самый быстрый.</h1>
                     
-                    <p>Непревзойденная скорость, безопасность и надежность. Используйте лучший эмулятор, созданный на базе передовых технологий.</p>
+                    <p>Непревзойденная скорость, безопасность и надежность. Используйте лучший эмулятор - WPlayer.</p>
                     
                     <div class="btn-group">
-                        <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            Присоединиться к Telegram
+                        <a href="https://clck.ru/3NaFFb" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            Присоединиться к сообществу
                         </a>
-                        <a href="https://t.me/c/2621669532/475" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        <a href="https://clck.ru/3NaFFb" class="btn btn-secondary">
                             Скачать WPlayer
                         </a>
                     </div>
@@ -786,8 +852,8 @@
                 <div class="emulator-content">
                     <div class="emulator-text loading">
                         <h2>Эмулятор WPlayer</h2>
-                        <p>WPlayer — мощный и интуитивный эмулятор для запуска ваших любимых игр с непревзойденной производительностью и стабильностью.</p>
-                        <a href="https://t.me/c/2621669532/475" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <p>WPlayer — мощный и интуитивный эмулятор для запуска ваших любимых игр с непревзойденной производительностью и стабильностью. Поддержка DirectX, OpenGL и высоких разрешений.</p>
+                        <a href="https://clck.ru/3NaFBu" class="btn btn-primary">
                             Скачать эмулятор
                         </a>
                     </div>
@@ -798,25 +864,29 @@
             </div>
         </section>
 
-        <section id="steam" class="steam">
+        <!-- Standoff 2 Optimized -->
+<section id="standoff2" class="standoff2">
+    <div class="container">
+        <div class="standoff2-content loading">
+            <div class="standoff2-icon">
+                <img src="https://i.postimg.cc/X7f1gnwq/40-Kb6-HTOlx3cb-Ct-Qxeq-Yqc-Cj00-B00-Fpa-Q7-CAe7-XEOb-Jy-Xt-J4xtzj4x-SCA4-P8k-OEhd-H4z-Sg-Z0-R4naxe-YRF3w-POLT.jpg" alt="Standoff 2">
+            </div>
+            <h2>Оптимизирован под Standoff 2</h2>
+            <p>WPlayer обеспечивает максимальную производительность и стабильность при запуске Standoff 2 с высоким FPS и минимальными задержками.</p>
+            <a href="https://clck.ru/3NaFBu" class="btn btn-primary">
+                Скачать WPlayer
+            </a>
+        </div>
+    </div>
+</section>
+
+        <!-- Поддержка -->
+        <section id="support" style="padding: 8rem 0; text-align: center;">
             <div class="container">
                 <div class="loading">
-                    <h2>Пополни кошелёк Steam</h2>
-                    <p>Пополнение без комиссии и моментальное зачисление средств</p>
-                    
-                    <div class="iframe-container">
-                        <iframe 
-                            id="steamIframe" 
-                            src="https://igrovoi-rt.mobi-money.ru/pay/article/al_steam_rt_ia_sbp" 
-                            title="Пополни кошелек Steam на Игровом от Ростелеком" 
-                            height="648" 
-                            scrolling="no">
-                        </iframe>
-                    </div>
-                    
-                    <button id="toggleIframe" class="btn btn-secondary">
-                        Развернуть
-                    </button>
+                    <h2>Поддержка</h2>
+                    <p style="max-width: 700px; margin: 1rem auto;">Если у вас есть вопросы по установке или использованию эмулятора — свяжитесь с нами.</p>
+                    <a href="https://t.me/projectwest" target="_blank" class="btn btn-secondary">Написать в Telegram</a>
                 </div>
             </div>
         </section>
@@ -827,7 +897,8 @@
             <p>© 2025 Project West. Все права защищены.</p>
             <div class="footer-links">
                 <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer">Telegram</a>
-                <a href="https://t.me/c/2621669532/475" target="_blank" rel="noopener noreferrer">Скачать WPlayer</a>
+                <a href="https://clck.ru/3NaFBu">Скачать</a>
+                <a href="https://clck.ru/3NaFDj">Поддержка</a>
             </div>
         </div>
     </footer>
@@ -859,22 +930,6 @@
                     hamburger.classList.remove('active');
                     navLinks.classList.remove('active');
                 });
-            });
-
-            // Steam iframe toggle
-            const steamIframe = document.getElementById('steamIframe');
-            const toggleButton = document.getElementById('toggleIframe');
-            let isExpanded = false;
-
-            toggleButton.addEventListener('click', function() {
-                if (isExpanded) {
-                    steamIframe.style.height = '648px';
-                    toggleButton.textContent = 'Развернуть';
-                } else {
-                    steamIframe.style.height = '986px';
-                    toggleButton.textContent = 'Скрыть';
-                }
-                isExpanded = !isExpanded;
             });
 
             // Loading animations with stagger
@@ -918,6 +973,15 @@
                 if (geometricLines) {
                     geometricLines.style.transform = `translateY(${scrolled * 0.1}px)`;
                 }
+            });
+
+            // Mouse move effect for grid
+            const grid = document.querySelector('.grid-overlay');
+            grid.addEventListener('mousemove', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                grid.style.setProperty('--x', `${x}px`);
+                grid.style.setProperty('--y', `${y}px`);
             });
         });
     </script>
