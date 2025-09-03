@@ -1027,33 +1027,47 @@
             <p style="max-width: 600px; margin: 0 auto 2.5rem; color: var(--text-secondary); font-size: 1.1rem;">
                 Помогите нам развивать WPlayer — ваш вклад делает эмулятор ещё быстрее и стабильнее.
             </p>
-            <div style="
-                display: inline-block;
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid var(--border);
-                border-radius: 16px;
-                padding: 1.5rem;
-                backdrop-filter: blur(10px);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transition: all 0.3s ease;
-                max-width: 360px;
-                width: 100%;
-            "
-            onmouseover="this.style.borderColor='var(--border-hover)'; this.style.transform='translateY(-2px)';"
-            onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)';">
-                <iframe 
-                    src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=1CI4EP9A700.250903&" 
-                    width="330" 
-                    height="50" 
-                    frameborder="0" 
-                    allowtransparency="true" 
-                    scrolling="no"
-                    style="border: none; box-shadow: none; outline: none; background: transparent;">
-                </iframe>
-            </div>
-        </div>
-    </div>
-</section>​
+           <div style="
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+">
+    <form action="https://yoomoney.ru/quickpay" method="post">
+        <input type="hidden" name="receiver" value="410013385213842">
+        <input type="hidden" name="sum" value="100" data-amount="100">
+        <input type="hidden" name="comment" value="Поддержка проекта WPlayer">
+        <input type="hidden" name="quickpay-form" value="donate">
+        <input type="hidden" name="paymentType" value="account">
+        <button type="submit" style="
+            background: #f05c4a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        ">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">
+                <path d="M12 2C13.1046 2 14 2.89543 14 4V12H18C19.1046 12 20 12.8954 20 14V18C20 19.1046 19.1046 20 18 20H14V22C14 23.1046 13.1046 24 12 24C10.8954 24 10 23.1046 10 22V20H6C4.89543 20 4 19.1046 4 18V14C4 12.8954 4.89543 12 6 12H10V4C10 2.89543 10.8954 2 12 2Z" fill="white"/>
+                <path d="M12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z" fill="white"/>
+            </svg>
+            Пожертвовать
+        </button>
+    </form>
+</div>​
 
     <footer>
         <div class="container">
