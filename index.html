@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project West - WPlayer Emulator</title>
     <!-- Добавляем favicon в виде смайлика огонька -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
     <style>
         /* Import premium fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -280,33 +280,32 @@
         }
 
         /* Mobile Menu */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 4px;
-}
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
 
-.hamburger span {
-    width: 24px;
-    height: 1px;
-    background: var(--text-primary);
-    transition: all 0.3s ease;
-    border-radius: 1px;
-}
+        .hamburger span {
+            width: 24px;
+            height: 1px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 1px;
+        }
 
-/* Состояние активного меню */
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
 
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
 
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
 
         /* Premium Buttons */
         .btn {
@@ -374,6 +373,85 @@
             flex-wrap: wrap;
         }
 
+        /* User Profile Dropdown */
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .user-menu:hover {
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            width: 220px;
+        }
+
+        .user-menu:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.25rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item::before {
+            content: '🚪';
+            font-size: 1rem;
+        }
+
         /* Sections */
         section {
             padding: 12rem 0;
@@ -421,10 +499,9 @@
             font-weight: 400;
         }
 
-        /* Убран градиент из hero */
-.hero::before {
-    display: none;
-}
+        .hero::before {
+            display: none;
+        }
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
@@ -687,6 +764,14 @@
                 padding: 0.5rem 1rem;
                 font-size: 0.8rem;
             }
+
+            .user-menu {
+                max-width: 100px;
+            }
+
+            .user-name {
+                max-width: 80px;
+            }
         }
 
         /* Animations */
@@ -713,77 +798,65 @@
         }
 
         /* Standoff 2 Section */
-.standoff2 {
-    background: rgba(255, 255, 255, 0.01);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    padding: 8rem 0;
-}
+        .standoff2 {
+            background: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 8rem 0;
+        }
 
-.standoff2-content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
+        .standoff2-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-.standoff2-icon {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 2rem;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.02);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s ease;
-    position: relative;
-}
+        .standoff2-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
 
-.standoff2-icon:hover {
-    transform: translateY(-5px);
-    border-color: var(--border-hover);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
+        .standoff2-icon:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
 
-.standoff2-icon img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    display: block;
-    object-fit: contain;
-}
+        .standoff2-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
 
-.standoff2 h2 {
-    margin-bottom: 1.5rem;
-    color: var(--text-primary);
-    position: relative;
-    display: inline-block;
-}
+        .standoff2 h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            position: relative;
+            display: inline-block;
+        }
 
-.standoff2 p {
-    margin-bottom: 2.5rem;
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .standoff2-icon {
-        width: 100px;
-        height: 100px;
-    }
-
-    .standoff2 h2::after {
-        font-size: 1.2rem;
-    }
-}
+        .standoff2 p {
+            margin-bottom: 2.5rem;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -800,6 +873,8 @@
                     <li><a href="#emulator">Эмулятор</a></li>
                     <li><a href="#support">Поддержка</a></li>
                     <li><a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                    <!-- Место для кнопки входа / профиля -->
+                    <li id="auth-button-container"></li>
                 </ul>
 
                 <div class="hamburger" id="hamburger">
@@ -815,10 +890,7 @@
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content loading">
-                    </div>
-                    
                     <h1>Самый быстрый.</h1>
-                    
                     <p>Непревзойденная скорость, безопасность и надежность. Используйте лучший эмулятор - WPlayer.</p>
                     
                     <div class="btn-group">
@@ -865,20 +937,20 @@
         </section>
 
         <!-- Standoff 2 Optimized -->
-<section id="standoff2" class="standoff2">
-    <div class="container">
-        <div class="standoff2-content loading">
-            <div class="standoff2-icon">
-                <img src="https://i.postimg.cc/X7f1gnwq/40-Kb6-HTOlx3cb-Ct-Qxeq-Yqc-Cj00-B00-Fpa-Q7-CAe7-XEOb-Jy-Xt-J4xtzj4x-SCA4-P8k-OEhd-H4z-Sg-Z0-R4naxe-YRF3w-POLT.jpg" alt="Standoff 2">
+        <section id="standoff2" class="standoff2">
+            <div class="container">
+                <div class="standoff2-content loading">
+                    <div class="standoff2-icon">
+                        <img src="https://i.postimg.cc/X7f1gnwq/40-Kb6-HTOlx3cb-Ct-Qxeq-Yqc-Cj00-B00-Fpa-Q7-CAe7-XEOb-Jy-Xt-J4xtzj4x-SCA4-P8k-OEhd-H4z-Sg-Z0-R4naxe-YRF3w-POLT.jpg" alt="Standoff 2">
+                    </div>
+                    <h2>Оптимизирован под Standoff 2</h2>
+                    <p>WPlayer обеспечивает максимальную производительность и стабильность при запуске Standoff 2 с высоким FPS и минимальными задержками.</p>
+                    <a href="https://clck.ru/3NaFBu" class="btn btn-primary">
+                        Скачать WPlayer
+                    </a>
+                </div>
             </div>
-            <h2>Оптимизирован под Standoff 2</h2>
-            <p>WPlayer обеспечивает максимальную производительность и стабильность при запуске Standoff 2 с высоким FPS и минимальными задержками.</p>
-            <a href="https://clck.ru/3NaFBu" class="btn btn-primary">
-                Скачать WPlayer
-            </a>
-        </div>
-    </div>
-</section>
+        </section>
 
         <!-- Поддержка -->
         <section id="support" style="padding: 8rem 0; text-align: center;">
@@ -902,6 +974,87 @@
             </div>
         </div>
     </footer>
+
+    <!-- Firebase Authentication Script -->
+    <script type="module">
+        // Импортируем Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getAuth,
+            signInWithPopup,
+            GoogleAuthProvider,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // Конфигурация Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMPoFyJ2aMJZQTfcPotomOMSQHOwTvxeA",
+            authDomain: "wplayer-emu.firebaseapp.com",
+            projectId: "wplayer-emu",
+            storageBucket: "wplayer-emu.appspot.com",
+            messagingSenderId: "53115769174",
+            appId: "1:53115769174:web:cbf7fd3124127242a906f7"
+        };
+
+        // Инициализация Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Контейнер для кнопки входа/профиля
+        const authContainer = document.getElementById('auth-button-container');
+
+        // Функция отображения UI в зависимости от состояния входа
+        const renderAuthUI = (user) => {
+            authContainer.innerHTML = ''; // Очистка
+
+            if (user) {
+                // Пользователь вошёл — показываем аватар и выпадающее меню
+                const userMenu = document.createElement('div');
+                userMenu.className = 'user-menu';
+                userMenu.innerHTML = `
+                    <img src="${user.photoURL || 'https://ui-avatars.com/api/?name=Guest&background=111&color=fff'}" alt="Аватар" class="user-avatar">
+                    <span class="user-name">${user.displayName || 'Пользователь'}</span>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item" onclick="logout()">Выйти</div>
+                    </div>
+                `;
+                authContainer.appendChild(userMenu);
+            } else {
+                // Не вошёл — кнопка входа
+                const loginBtn = document.createElement('button');
+                loginBtn.textContent = 'Войти через Google';
+                loginBtn.style.padding = '0.5rem 1rem';
+                loginBtn.style.borderRadius = '50px';
+                loginBtn.style.border = '1px solid var(--border)';
+                loginBtn.style.background = 'rgba(255,255,255,0.05)';
+                loginBtn.style.color = 'var(--text-primary)';
+                loginBtn.style.cursor = 'pointer';
+                loginBtn.style.fontSize = '0.95rem';
+                loginBtn.onclick = () => {
+                    signInWithPopup(auth, provider).catch((error) => {
+                        alert("Ошибка входа: " + error.message);
+                    });
+                };
+                authContainer.appendChild(loginBtn);
+            }
+        };
+
+        // Отслеживаем состояние аутентификации
+        onAuthStateChanged(auth, (user) => {
+            renderAuthUI(user);
+        });
+
+        // Функция выхода (доступна глобально)
+        window.logout = () => {
+            signOut(auth).then(() => {
+                alert("Вы успешно вышли.");
+            }).catch((error) => {
+                alert("Ошибка выхода: " + error.message);
+            });
+        };
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
