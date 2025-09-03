@@ -423,7 +423,7 @@
             transform: translateY(-10px);
             transition: all 0.3s ease;
             z-index: 1000;
-            width: 220px;
+            width: 300px;
         }
 
         .user-menu:hover .dropdown-menu {
@@ -447,9 +447,46 @@
             color: var(--text-primary);
         }
 
-        .dropdown-item::before {
-            content: '🚪';
-            font-size: 1rem;
+        .dropdown-header {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem 0.75rem 1.25rem;
+            align-items: center;
+        }
+
+        .dropdown-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        .dropdown-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .dropdown-email {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.2;
+            margin-top: 0.15rem;
+            word-break: break-all;
+        }
+
+        .dropdown-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.35rem;
+        }
+
+        .dropdown-separator {
+            height: 1px;
+            background: var(--border);
+            margin: 0.5rem 0;
         }
 
         /* Sections */
@@ -936,21 +973,7 @@
             </div>
         </section>
 
-        <!-- Личный кабинет (виден только для авторизованных) -->
-        <section id="account" class="standoff2" style="display:none;">
-            <div class="container">
-                <div class="standoff2-content loading">
-                    <div class="standoff2-icon">
-                        <img id="accountAvatar" src="" alt="Аватар">
-                    </div>
-                    <h2 style="margin-bottom:0.5rem;">Личный кабинет</h2>
-                    <p id="accountName" style="margin-bottom:0.25rem; font-size:1.1rem; color:var(--text-primary);"></p>
-                    <p id="accountEmail" style="margin-bottom:0.75rem;"></p>
-                    <p id="accountLoginDate" style="margin-bottom:2rem; color:var(--text-secondary);"></p>
-                    <button class="btn btn-secondary" id="logoutBtnInline">Выйти</button>
-                </div>
-            </div>
-        </section>
+        
 
         <!-- Standoff 2 Optimized -->
         <section id="standoff2" class="standoff2">
@@ -1020,13 +1043,8 @@
 
         // Контейнер для кнопки входа/профиля
         const authContainer = document.getElementById('auth-button-container');
-        // Элементы личного кабинета
-        const accountSection = document.getElementById('account');
-        const accountAvatar = document.getElementById('accountAvatar');
-        const accountName = document.getElementById('accountName');
-        const accountEmail = document.getElementById('accountEmail');
-        const accountLoginDate = document.getElementById('accountLoginDate');
-        const logoutBtnInline = document.getElementById('logoutBtnInline');
+        // Данные для меню профиля
+        let lastLoginFormatted = '';
 
         // Функция отображения UI в зависимости от состояния входа
         const renderAuthUI = (user) => {
@@ -1036,20 +1054,24 @@
                 // Пользователь вошёл — показываем аватар и выпадающее меню
                 const userMenu = document.createElement('div');
                 userMenu.className = 'user-menu';
+                const photo = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email || 'User') + '&background=111&color=fff';
                 userMenu.innerHTML = `
-                    <img src="${user.photoURL || 'https://ui-avatars.com/api/?name=Guest&background=111&color=fff'}" alt="Аватар" class="user-avatar">
+                    <img src="${photo}" alt="Аватар" class="user-avatar">
                     <span class="user-name">${user.displayName || 'Пользователь'}</span>
                     <div class="dropdown-menu">
+                        <div class="dropdown-header">
+                            <img class="dropdown-avatar" src="${photo}" alt="Аватар">
+                            <div>
+                                <div class="dropdown-name">${user.displayName || 'Пользователь'}</div>
+                                <div class="dropdown-email">${user.email || ''}</div>
+                                <div class="dropdown-date" id="dropdownLoginDate"></div>
+                            </div>
+                        </div>
+                        <div class="dropdown-separator"></div>
                         <div class="dropdown-item" onclick="logout()">Выйти</div>
                     </div>
                 `;
                 authContainer.appendChild(userMenu);
-
-                // Секция личного кабинета
-                const photo = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email || 'User') + '&background=111&color=fff';
-                accountAvatar.src = photo;
-                accountName.textContent = user.displayName || 'Пользователь';
-                accountEmail.textContent = user.email || '';
 
                 // Дата входа — сохраняем и отображаем
                 const loginKey = 'pw_last_login';
@@ -1064,20 +1086,13 @@
                     }
                     const saved = localStorage.getItem(loginKey) || signInTime;
                     const date = new Date(saved);
-                    const formatted = date.toLocaleString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                    accountLoginDate.textContent = 'Дата входа: ' + formatted;
+                    lastLoginFormatted = date.toLocaleString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                 } catch (e) {
                     // Fallback: просто текущая дата
-                    const formatted = new Date().toLocaleString('ru-RU');
-                    accountLoginDate.textContent = 'Дата входа: ' + formatted;
+                    lastLoginFormatted = new Date().toLocaleString('ru-RU');
                 }
-
-                accountSection.style.display = '';
-
-                // Кнопка выхода внутри секции
-                if (logoutBtnInline) {
-                    logoutBtnInline.onclick = () => window.logout();
-                }
+                const dateEl = authContainer.querySelector('#dropdownLoginDate');
+                if (dateEl) dateEl.textContent = 'Дата входа: ' + lastLoginFormatted;
             } else {
                 // Не вошёл — кнопка входа
                 const loginBtn = document.createElement('button');
@@ -1095,9 +1110,6 @@
                     });
                 };
                 authContainer.appendChild(loginBtn);
-
-                // Скрываем личный кабинет
-                if (accountSection) accountSection.style.display = 'none';
             }
         };
 
