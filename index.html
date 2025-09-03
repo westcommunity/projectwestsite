@@ -936,6 +936,22 @@
             </div>
         </section>
 
+        <!-- Личный кабинет (виден только для авторизованных) -->
+        <section id="account" class="standoff2" style="display:none;">
+            <div class="container">
+                <div class="standoff2-content loading">
+                    <div class="standoff2-icon">
+                        <img id="accountAvatar" src="" alt="Аватар">
+                    </div>
+                    <h2 style="margin-bottom:0.5rem;">Личный кабинет</h2>
+                    <p id="accountName" style="margin-bottom:0.25rem; font-size:1.1rem; color:var(--text-primary);"></p>
+                    <p id="accountEmail" style="margin-bottom:0.75rem;"></p>
+                    <p id="accountLoginDate" style="margin-bottom:2rem; color:var(--text-secondary);"></p>
+                    <button class="btn btn-secondary" id="logoutBtnInline">Выйти</button>
+                </div>
+            </div>
+        </section>
+
         <!-- Standoff 2 Optimized -->
         <section id="standoff2" class="standoff2">
             <div class="container">
@@ -1004,6 +1020,13 @@
 
         // Контейнер для кнопки входа/профиля
         const authContainer = document.getElementById('auth-button-container');
+        // Элементы личного кабинета
+        const accountSection = document.getElementById('account');
+        const accountAvatar = document.getElementById('accountAvatar');
+        const accountName = document.getElementById('accountName');
+        const accountEmail = document.getElementById('accountEmail');
+        const accountLoginDate = document.getElementById('accountLoginDate');
+        const logoutBtnInline = document.getElementById('logoutBtnInline');
 
         // Функция отображения UI в зависимости от состояния входа
         const renderAuthUI = (user) => {
@@ -1021,6 +1044,40 @@
                     </div>
                 `;
                 authContainer.appendChild(userMenu);
+
+                // Секция личного кабинета
+                const photo = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName || user.email || 'User') + '&background=111&color=fff';
+                accountAvatar.src = photo;
+                accountName.textContent = user.displayName || 'Пользователь';
+                accountEmail.textContent = user.email || '';
+
+                // Дата входа — сохраняем и отображаем
+                const loginKey = 'pw_last_login';
+                const nowIso = new Date().toISOString();
+                // Если новая сессия (user.metadata.lastSignInTime меняется), обновим дату
+                try {
+                    const lastSaved = localStorage.getItem(loginKey);
+                    const signInTime = user.metadata?.lastSignInTime || nowIso;
+                    // Если нет сохранённой или отличается — сохраняем текущую метку
+                    if (!lastSaved || lastSaved !== signInTime) {
+                        localStorage.setItem(loginKey, signInTime);
+                    }
+                    const saved = localStorage.getItem(loginKey) || signInTime;
+                    const date = new Date(saved);
+                    const formatted = date.toLocaleString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    accountLoginDate.textContent = 'Дата входа: ' + formatted;
+                } catch (e) {
+                    // Fallback: просто текущая дата
+                    const formatted = new Date().toLocaleString('ru-RU');
+                    accountLoginDate.textContent = 'Дата входа: ' + formatted;
+                }
+
+                accountSection.style.display = '';
+
+                // Кнопка выхода внутри секции
+                if (logoutBtnInline) {
+                    logoutBtnInline.onclick = () => window.logout();
+                }
             } else {
                 // Не вошёл — кнопка входа
                 const loginBtn = document.createElement('button');
@@ -1038,6 +1095,9 @@
                     });
                 };
                 authContainer.appendChild(loginBtn);
+
+                // Скрываем личный кабинет
+                if (accountSection) accountSection.style.display = 'none';
             }
         };
 
@@ -1050,6 +1110,7 @@
         window.logout = () => {
             signOut(auth).then(() => {
                 alert("Вы успешно вышли.");
+                try { localStorage.removeItem('pw_last_login'); } catch (e) {}
             }).catch((error) => {
                 alert("Ошибка выхода: " + error.message);
             });
