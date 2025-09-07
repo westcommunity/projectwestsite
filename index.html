@@ -1466,6 +1466,7 @@
         let friendRequests = [];
         let currentChat = null;
         let chatMessages = [];
+        let foundUser = null;
 
         // Генерация уникального ID для пользователя
         function generateUserId() {
@@ -1512,7 +1513,11 @@
                     const users = snapshot.val();
                     for (let uid in users) {
                         if (users[uid].userId === userId && uid !== currentUser.uid) {
-                            return users[uid];
+                            // Возвращаем объект с добавленным uid
+                            return {
+                                ...users[uid],
+                                uid: uid
+                            };
                         }
                     }
                 }
@@ -1523,17 +1528,14 @@
             }
         }
 
-        async function sendFriendRequest(targetUserId) {
+        async function sendFriendRequest(targetUser) {
             try {
-                const targetUserRef = ref(database, `users/${targetUserId}`);
-                const targetUserSnapshot = await get(targetUserRef);
-                
-                if (!targetUserSnapshot.exists()) {
+                if (!targetUser || !targetUser.uid) {
                     alert('Пользователь не найден');
                     return;
                 }
 
-                const targetUser = targetUserSnapshot.val();
+                const targetUserId = targetUser.uid;
                 const requestId = push(ref(database, 'friendRequests')).key;
                 
                 const request = {
@@ -1949,18 +1951,18 @@
                 return;
             }
             
-            const user = await searchUserByID(userId);
+            foundUser = await searchUserByID(userId);
             const resultDiv = document.getElementById('search-result');
             
-            if (user) {
+            if (foundUser) {
                 resultDiv.innerHTML = `
                     <div class="search-result-item">
-                        <img src="${user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.displayName) + '&background=111&color=fff'}" alt="Аватар" class="search-avatar">
+                        <img src="${foundUser.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(foundUser.displayName) + '&background=111&color=fff'}" alt="Аватар" class="search-avatar">
                         <div class="search-info">
-                            <div class="search-name">${user.displayName}</div>
-                            <div class="search-id">ID: ${user.userId}</div>
+                            <div class="search-name">${foundUser.displayName}</div>
+                            <div class="search-id">ID: ${foundUser.userId}</div>
                         </div>
-                        <button class="btn btn-primary" onclick="sendFriendRequest('${user.uid}')">Добавить в друзья</button>
+                        <button class="btn btn-primary" onclick="sendFriendRequest(foundUser)">Добавить в друзья</button>
                     </div>
                 `;
             } else {
@@ -1981,6 +1983,7 @@
                 editMessage(messageId, newText);
             }
         };
+        window.sendFriendRequest = sendFriendRequest;
 
         onAuthStateChanged(auth, (user) => {
             renderAuthUI(user);
