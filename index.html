@@ -30,17 +30,17 @@
         :root {
             --background: #000000;
             --surface: #0a0a0a;
-            --surface-elevated: #111111;
+            --surface-elevated: #1a1a1a; /* Slightly lighter for contrast */
             --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.6);
-            --text-muted: rgba(255, 255, 255, 0.4);
-            --border: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            --accent: #ffffff;
-            --accent-hover: rgba(255, 255, 255, 0.9);
+            --text-secondary: rgba(255, 255, 255, 0.6); /* Muted for minimalism */
+            --text-muted: rgba(255, 255, 255, 0.3);
+            --border: rgba(255, 255, 255, 0.05); /* Very subtle border */
+            --border-hover: rgba(255, 255, 255, 0.1);
+            --accent: #FF6B00; /* Vibrant Orange */
+            --accent-hover: #FF8800;
             --shadow: rgba(0, 0, 0, 0.5);
-            --glow: rgba(255, 255, 255, 0.08);
-            --grid-color: rgba(255, 255, 255, 0.02);
+            --glow: rgba(255, 107, 0, 0.1); /* Subtle orange glow */
+            --grid-color: rgba(255, 255, 255, 0.01); /* Almost invisible grid */
         }
 
         /* Reset and Base Styles */
@@ -74,11 +74,12 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px; /* Smaller, more subtle grid */
             pointer-events: none;
             z-index: -1;
+            opacity: 0.5; /* Very subtle */
         }
 
         .grid-overlay::after {
@@ -90,94 +91,64 @@
             height: 100%;
             background: radial-gradient(
                 300px circle at var(--x, 50%) var(--y, 50%),
-                rgba(255, 255, 255, 0.1),
-                transparent 70%
+                rgba(255, 107, 0, 0.05), /* Very subtle orange radial glow */
+                transparent 75%
             );
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
             pointer-events: none;
             z-index: 1;
         }
 
         .grid-overlay:hover::after {
-            opacity: 1;
+            opacity: 0.6; /* Slightly more visible on hover */
         }
 
-        /* Geometric Lines */
+        /* Geometric Lines - removed for maximum minimalism as per request */
         .geometric-lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.3;
-        }
-
-        .geometric-lines::before,
-        .geometric-lines::after {
-            content: '';
-            position: absolute;
-            background: linear-gradient(45deg, transparent 49%, rgba(255,255,255,0.02) 50%, transparent 51%);
-        }
-
-        .geometric-lines::before {
-            top: 20%;
-            left: 10%;
-            width: 300px;
-            height: 300px;
-            transform: rotate(45deg);
-        }
-
-        .geometric-lines::after {
-            bottom: 20%;
-            right: 10%;
-            width: 400px;
-            height: 400px;
-            transform: rotate(-30deg);
+            display: none;
         }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--background);
+            background: var(--surface);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 2px;
+            background: var(--accent);
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--border-hover);
+            background: var(--accent-hover);
         }
 
         /* Typography */
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
+            font-weight: 800;
             line-height: 1.1;
             letter-spacing: -0.03em;
         }
 
         /* Desktop Typography */
         h1 {
-            font-size: 6.5rem;
-            font-weight: 800;
+            font-size: 5.5rem; /* Balanced, impactful size */
+            font-weight: 900;
             letter-spacing: -0.05em;
         }
 
         h2 {
-            font-size: 4.5rem;
-            font-weight: 700;
+            font-size: 3.8rem; /* Clean section title size */
+            font-weight: 800;
             letter-spacing: -0.04em;
         }
 
         p {
-            font-size: 1.2rem;
+            font-size: 1.15rem; /* Optimal readability */
             line-height: 1.7;
             color: var(--text-secondary);
             font-weight: 400;
@@ -185,7 +156,7 @@
 
         /* Container */
         .container {
-            max-width: 1400px;
+            max-width: 1300px; /* Slightly narrower for focus */
             margin: 0 auto;
             padding: 0 3rem;
             position: relative;
@@ -200,14 +171,15 @@
             right: 0;
             z-index: 1000;
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(24px);
+            backdrop-filter: blur(20px); /* Refined blur */
             border-bottom: 1px solid var(--border);
-            transition: all 0.4s ease;
+            transition: all 0.3s ease-out;
         }
 
         header.scrolled {
             background: rgba(0, 0, 0, 0.9);
             border-bottom-color: var(--border-hover);
+            box-shadow: 0 2px 10px var(--shadow); /* Subtle shadow on scroll */
         }
 
         .navbar {
@@ -218,23 +190,22 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.02em;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
 
         .logo:hover {
-            color: var(--text-secondary);
-            transform: translateY(-1px);
+            color: var(--accent); /* Orange on hover */
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 3rem;
+            gap: 2.5rem;
             align-items: center;
         }
 
@@ -242,68 +213,44 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-size: 0.98rem;
+            transition: color 0.3s ease, transform 0.2s ease;
             position: relative;
             padding: 0.5rem 0;
         }
 
         .nav-links a:hover {
             color: var(--text-primary);
+            transform: translateY(-1px);
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0;
+            left: 50%; /* Center underline */
             width: 0;
-            height: 1px;
+            height: 2px;
             background: var(--accent);
-            transition: width 0.3s ease;
+            transition: width 0.3s ease, left 0.3s ease;
         }
 
         .nav-links a:hover::after {
             width: 100%;
+            left: 0;
         }
 
-        /* Premium Badge */
-        .premium-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .premium-badge:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        .premium-badge::before {
-            content: '⚡';
-            font-size: 1rem;
-        }
+        /* Premium Badge - removed as it's not minimalist */
 
         /* Mobile Menu (Static 3 Bars) */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            gap: 6px;
-            padding: 10px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            gap: 5px;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
         }
 
         .hamburger:hover {
@@ -311,11 +258,10 @@
         }
 
         .hamburger span {
-            width: 24px;
+            width: 26px;
             height: 2px;
             background: var(--text-primary);
             border-radius: 2px;
-            /* Убраны все transition и transform свойства для статичного вида */
         }
 
         /* Premium Buttons */
@@ -330,11 +276,12 @@
             text-decoration: none;
             border: none;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             min-width: 180px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
         }
 
         .btn::before {
@@ -345,7 +292,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.6s ease;
+            transition: left 0.5s ease;
         }
 
         .btn:hover::before {
@@ -360,8 +307,8 @@
 
         .btn-primary:hover {
             background: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--glow); /* Accent glow on hover */
         }
 
         .btn-secondary {
@@ -373,8 +320,8 @@
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--border-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 20px 60px var(--glow);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
         }
 
         .btn-group {
@@ -399,8 +346,9 @@
         }
 
         .user-menu:hover {
-            border-color: var(--border-hover);
+            border-color: var(--accent);
             background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
         }
 
         .user-avatar {
@@ -408,13 +356,14 @@
             height: 32px;
             border-radius: 50%;
             object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .user-name {
             font-size: 0.95rem;
             font-weight: 500;
             color: var(--text-primary);
-            max-width: 120px;
+            max-width: 100px; /* Constrain width */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -422,19 +371,19 @@
 
         .dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: 110%;
             right: 0;
             background: var(--surface-elevated);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-hover);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             z-index: 1000;
-            width: 300px;
+            width: 280px; /* Slimmer dropdown */
         }
 
         .user-menu:hover .dropdown-menu {
@@ -444,34 +393,34 @@
         }
 
         .dropdown-item {
-            padding: 1rem 1.25rem;
+            padding: 0.9rem 1.25rem;
             font-size: 0.95rem;
             color: var(--text-secondary);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            cursor: pointer;
         }
 
         .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
         }
 
         .dropdown-header {
-            display: grid;
-            grid-template-columns: 56px 1fr;
-            gap: 0.75rem;
-            padding: 1rem 1.25rem 0.75rem 1.25rem;
+            display: flex; /* Changed to flex for simpler alignment */
+            gap: 1rem;
+            padding: 1.2rem 1.25rem 0.8rem 1.25rem;
             align-items: center;
         }
 
         .dropdown-avatar {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid var(--border);
+            border: 1px solid var(--accent); /* Accent border */
         }
 
         .dropdown-name {
@@ -482,16 +431,16 @@
 
         .dropdown-email {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             line-height: 1.2;
             margin-top: 0.15rem;
             word-break: break-all;
         }
 
-        .dropdown-date {
+        .dropdown-date, .dropdown-id {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 0.35rem;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
         }
 
         .dropdown-separator {
@@ -502,111 +451,101 @@
 
         /* Sections */
         section {
-            padding: 12rem 0;
+            padding: 10rem 0; /* More balanced padding */
             position: relative;
         }
 
         /* Hero Section */
         .hero {
-            min-height: 88vh;
+            min-height: 80vh; /* Shorter, more focused hero */
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
             overflow: hidden;
-            padding-top: 14rem;
+            padding-top: 12rem; /* Adjusted top padding */
         }
 
         @media (max-width: 768px) {
             .hero {
-                padding-top: 10rem;
+                padding-top: 8rem;
+                min-height: 70vh;
             }
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 1000px;
+            max-width: 900px;
         }
 
         .hero h1 {
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 4rem;
-            max-width: 700px;
+            font-size: 1.25rem;
+            margin-bottom: 3.5rem;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
-            font-weight: 400;
-        }
-
-        .hero::before {
-            display: none;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         /* Platform Icons */
         .platforms {
-            margin-top: 6rem;
+            margin-top: 5rem;
         }
 
         .platforms-title {
             font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 500;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
         .platforms-grid {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             flex-wrap: wrap;
             align-items: center;
         }
 
         .platform-icon {
-            width: 60px;
-            height: 60px;
+            width: 55px; /* Slightly smaller icon */
+            height: 55px;
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(255, 255, 255, 0.02);
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
         }
 
         .platform-icon:hover {
-            border-color: var(--border-hover);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
+            border-color: var(--accent); /* Accent border on hover */
+            background: rgba(255, 107, 0, 0.05);
+            transform: translateY(-3px);
         }
 
         .platform-icon svg {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             fill: var(--text-secondary);
             transition: fill 0.3s ease;
         }
 
         .platform-icon:hover svg {
-            fill: var(--text-primary);
+            fill: var(--accent);
         }
 
         /* Windows Version Badge */
@@ -617,23 +556,23 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: var(--text-secondary);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             transition: all 0.3s ease;
         }
 
         .windows-version:hover {
             background: rgba(255, 255, 255, 0.06);
-            border-color: var(--border-hover);
+            border-color: var(--accent);
             transform: translateY(-2px);
         }
 
         /* Emulator Section */
         .emulator {
-            background: rgba(255, 255, 255, 0.01);
+            background: var(--surface);
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             backdrop-filter: blur(10px);
@@ -642,7 +581,7 @@
         .emulator-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8rem;
+            gap: 6rem; /* Balanced gap */
             align-items: center;
         }
 
@@ -653,7 +592,7 @@
 
         .emulator-text p {
             margin-bottom: 3rem;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             line-height: 1.8;
         }
 
@@ -663,37 +602,38 @@
             overflow: hidden;
             border: 1px solid var(--border);
             background: rgba(255, 255, 255, 0.02);
-            transition: all 0.6s ease;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
         .emulator-image:hover {
-            transform: translateY(-10px);
-            border-color: var(--border-hover);
-            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px var(--glow);
         }
 
         .emulator-image img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.6s ease;
+            transition: transform 0.4s ease;
         }
 
         .emulator-image:hover img {
-            transform: scale(1.02);
+            transform: scale(1.01);
         }
 
         /* Footer */
         footer {
             background: var(--background);
             border-top: 1px solid var(--border);
-            padding: 6rem 0;
+            padding: 5rem 0; /* More balanced padding */
             text-align: center;
         }
 
         footer p {
             color: var(--text-muted);
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             font-size: 0.95rem;
             font-weight: 400;
         }
@@ -701,7 +641,7 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 3rem;
+            gap: 2.5rem;
             flex-wrap: wrap;
         }
 
@@ -710,26 +650,28 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text-primary);
+            color: var(--accent);
             transform: translateY(-2px);
         }
 
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
             .container {
-                padding: 0 1.5rem;
+                padding: 0 1rem;
             }
 
             h1 {
                 font-size: 2.8rem;
+                letter-spacing: -0.04em;
             }
 
             h2 {
                 font-size: 2.2rem;
+                letter-spacing: -0.03em;
             }
 
             p {
@@ -737,7 +679,7 @@
             }
 
             .navbar {
-                height: 70px;
+                height: 65px;
             }
 
             .nav-links {
@@ -746,13 +688,14 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(0, 0, 0, 0.98);
-                backdrop-filter: blur(24px);
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
-                padding: 2rem 1.5rem;
-                gap: 2rem;
-                border-bottom: 1px solid var(--border);
-                border-radius: 0 0 24px 24px;
+                padding: 1.5rem 1rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--accent);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 5px 15px var(--shadow);
             }
 
             .nav-links.active {
@@ -768,18 +711,19 @@
             }
 
             .hero {
-                min-height: 90vh;
+                min-height: 65vh;
             }
 
             .hero p {
                 font-size: 1.1rem;
-                margin-bottom: 3rem;
+                margin-bottom: 2.5rem;
             }
 
             .btn {
                 width: 100%;
-                max-width: 300px;
-                padding: 1rem 2rem;
+                max-width: 280px;
+                padding: 0.9rem 2rem;
+                font-size: 0.95rem;
             }
 
             .btn-group {
@@ -795,17 +739,18 @@
             }
 
             .platforms-grid {
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .platform-icon {
-                width: 50px;
-                height: 50px;
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
             }
 
             .platform-icon svg {
-                width: 24px;
-                height: 24px;
+                width: 22px;
+                height: 22px;
             }
 
             .windows-version {
@@ -815,10 +760,41 @@
 
             .user-menu {
                 max-width: 100px;
+                padding: 0.4rem 0.8rem 0.4rem 0.6rem;
+            }
+
+            .user-avatar {
+                width: 28px;
+                height: 28px;
             }
 
             .user-name {
-                max-width: 80px;
+                max-width: 50px;
+                font-size: 0.85rem;
+            }
+
+            .dropdown-menu {
+                width: 250px;
+            }
+            .dropdown-header {
+                padding: 0.8rem 1rem 0.6rem 1rem;
+            }
+            .dropdown-avatar {
+                width: 40px;
+                height: 40px;
+            }
+            .dropdown-name {
+                font-size: 0.9rem;
+            }
+            .dropdown-email {
+                font-size: 0.75rem;
+            }
+            .dropdown-date, .dropdown-id {
+                font-size: 0.7rem;
+            }
+            .dropdown-item {
+                padding: 0.7rem 1rem;
+                font-size: 0.85rem;
             }
 
             footer {
@@ -826,7 +802,7 @@
             }
 
             footer p {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 margin-bottom: 1.5rem;
             }
 
@@ -834,16 +810,12 @@
                 gap: 1.5rem;
             }
 
-            section#support {
-                padding: 6rem 0 4rem 0;
-            }
-
-            section#donate {
-                padding: 6rem 0 4rem 0;
+            section#support, section#donate {
+                padding: 5rem 0;
             }
 
             .standoff2 {
-                padding: 6rem 0;
+                padding: 7rem 0;
             }
         }
 
@@ -851,7 +823,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(30px); /* Less dramatic */
             }
             to {
                 opacity: 1;
@@ -861,8 +833,8 @@
 
         .loading {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s ease;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out; /* Smoother, faster loading */
         }
 
         .loading.loaded {
@@ -872,25 +844,25 @@
 
         /* Standoff 2 Section */
         .standoff2 {
-            background: rgba(255, 255, 255, 0.01);
+            background: var(--surface);
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             backdrop-filter: blur(10px);
             text-align: center;
-            padding: 8rem 0;
+            padding: 9rem 0;
         }
 
         .standoff2-content {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
         }
 
         .standoff2-icon {
-            width: 120px;
-            height: 120px;
+            width: 100px; /* Balanced icon size */
+            height: 100px;
             margin: 0 auto 2rem;
-            border-radius: 16px;
+            border-radius: 18px;
             border: 1px solid var(--border);
             overflow: hidden;
             background: rgba(255, 255, 255, 0.02);
@@ -899,17 +871,18 @@
             justify-content: center;
             transition: all 0.4s ease;
             position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .standoff2-icon:hover {
-            transform: translateY(-5px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 30px var(--glow);
         }
 
         .standoff2-icon img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 90%;
+            max-height: 90%;
             width: auto;
             height: auto;
             display: block;
@@ -919,349 +892,64 @@
         .standoff2 h2 {
             margin-bottom: 1.5rem;
             color: var(--text-primary);
-            position: relative;
-            display: inline-block;
         }
 
         .standoff2 p {
             margin-bottom: 2.5rem;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* Модальные окна */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .modal-content {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-        }
-
-        .modal-body {
-            padding: 2rem;
-            max-height: calc(90vh - 120px);
-            overflow-y: auto;
-        }
-
-        /* Система друзей */
-        .search-section, .requests-section, .friends-section {
-            margin-bottom: 2rem;
-        }
-
-        .search-section h3, .requests-section h3, .friends-section h3 {
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-        }
-
-        .search-form {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .search-form input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
-        }
-
-        .search-form input:focus {
-            outline: none;
-            border-color: var(--border-hover);
-        }
-
-        .search-result-item, .friend-item, .request-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-result-item:hover, .friend-item:hover, .request-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-hover);
-        }
-
-        .search-avatar, .friend-avatar, .request-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .search-info, .friend-info, .request-info {
-            flex: 1;
-        }
-
-        .search-name, .friend-name, .request-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .search-id, .friend-status, .request-time {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .request-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .request-actions .btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        .no-results {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 2rem;
-            font-style: italic;
-        }
-
-        /* Чат */
-        .chat-modal {
-            max-width: 600px;
-        }
-
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .chat-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .chat-info {
-            flex: 1;
-        }
-
-        .chat-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .chat-status {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .chat-body {
-            display: flex;
-            flex-direction: column;
-            height: 500px;
-        }
-
-        .messages-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .message {
-            display: flex;
-            align-items: flex-end;
-            gap: 0.5rem;
-            max-width: 70%;
-        }
-
-        .message.own {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .message.other {
-            align-self: flex-start;
-        }
-
-        .message-content {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.75rem 1rem;
-            position: relative;
-        }
-
-        .message.own .message-content {
+        /* Donate Section specific styling */
+        section#donate .btn {
             background: var(--accent);
-            color: var(--background);
-            border-color: var(--accent);
-        }
-
-        .message-text {
-            margin-bottom: 0.25rem;
-            word-wrap: break-word;
-        }
-
-        .message-time {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        .message-actions {
-            display: flex;
-            gap: 0.25rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .message:hover .message-actions {
-            opacity: 1;
-        }
-
-        .message-actions button {
-            background: none;
+            color: white;
             border: none;
-            color: var(--text-secondary);
+            border-radius: 10px; /* Slightly less rounded */
+            padding: 1rem 2.5rem;
+            font-size: 1.05rem;
+            font-weight: 600;
             cursor: pointer;
-            padding: 0.25rem;
-            border-radius: 4px;
             transition: all 0.3s ease;
+            width: 100%;
+            max-width: 280px; /* Consistent with other buttons */
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 8px 20px var(--glow);
+            text-shadow: none; /* Minimalist, no text shadow */
         }
-
-        .message-actions button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
+        section#donate .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px var(--glow);
         }
-
-        .message-input {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-            border-top: 1px solid var(--border);
+        section#donate .btn::before {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
         }
-
-        .message-input input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
+        section#donate .content-box { /* Added for the inline-block div */
+            display: inline-block;
+            background: var(--surface-elevated); /* More pronounced background */
+            border: 1px solid var(--border-hover);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            max-width: 320px; /* Matching dropdown width */
+            width: 100%;
         }
-
-        .message-input input:focus {
-            outline: none;
-            border-color: var(--border-hover);
-        }
-
-        .message-input .btn {
-            padding: 0.75rem 1.5rem;
-        }
-
-        /* Адаптивность для модальных окон */
-        @media (max-width: 768px) {
-            .modal-overlay {
-                padding: 1rem;
-            }
-
-            .modal-content {
-                max-height: 95vh;
-            }
-
-            .modal-header, .modal-body {
-                padding: 1rem;
-            }
-
-            .search-form {
-                flex-direction: column;
-            }
-
-            .search-result-item, .friend-item, .request-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.5rem;
-            }
-
-            .request-actions {
-                justify-content: center;
-            }
-
-            .chat-body {
-                height: 400px;
-            }
-
-            .message {
-                max-width: 85%;
-            }
+        section#donate .content-box:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--glow);
         }
     </style>
 </head>
 <body>
     <div class="grid-overlay"></div>
-    <div class="geometric-lines"></div>
+    <!-- Removed .geometric-lines for maximum minimalism -->
 
     <header id="header">
         <div class="container">
@@ -1289,15 +977,15 @@
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content loading">
-                    <h1>Самый быстрый.</h1>
-                    <p>Непревзойденная скорость, безопасность и надежность. Используйте лучший эмулятор - WPlayer.</p>
+                    <h1>Запускайте любимые игры. Без компромиссов.</h1>
+                    <p>WPlayer — самый быстрый и надежный эмулятор для ПК. Ощутите непревзойденную производительность и максимальное погружение.</p>
                     
                     <div class="btn-group">
-                        <a href="https://clck.ru/3NaFFb" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            Присоединиться к сообществу
-                        </a>
-                        <a href="https://projectwest.site/link" class="btn btn-secondary">
+                        <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                             Скачать WPlayer
+                        </a>
+                        <a href="https://clck.ru/3NaFFb" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                            Присоединиться к сообществу
                         </a>
                     </div>
 
@@ -1310,7 +998,7 @@
                                 </svg>
                             </div>
                             <div class="windows-version">
-                                Windows 10 & 11 поддержка
+                                Поддержка Windows 10 & 11
                             </div>
                         </div>
                     </div>
@@ -1322,10 +1010,10 @@
             <div class="container">
                 <div class="emulator-content">
                     <div class="emulator-text loading">
-                        <h2>Эмулятор WPlayer</h2>
-                        <p>WPlayer — мощный и интуитивный эмулятор для запуска ваших любимых игр с непревзойденной производительностью и стабильностью. Поддержка DirectX, OpenGL и высоких разрешений.</p>
-                        <a href="https://projectwest.site/download" class="btn btn-primary">
-                            Скачать эмулятор
+                        <h2>WPlayer: новый уровень эмуляции.</h2>
+                        <p>Оцените мощь WPlayer, интуитивного эмулятора, созданного для максимальной производительности. Запускайте игры с поддержкой DirectX, OpenGL и высоким разрешением.</p>
+                        <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            Начать играть
                         </a>
                     </div>
                     <div class="emulator-image loading">
@@ -1341,9 +1029,9 @@
                     <div class="standoff2-icon">
                         <img src="https://i.postimg.cc/X7f1gnwq/40-Kb6-HTOlx3cb-Ct-Qxeq-Yqc-Cj00-B00-Fpa-Q7-CAe7-XEOb-Jy-Xt-J4xtzj4x-SCA4-P8k-OEhd-H4z-Sg-Z0-R4naxe-YRF3w-POLT.jpg" alt="Standoff 2">
                     </div>
-                    <h2>Оптимизирован под Standoff 2</h2>
-                    <p>WPlayer обеспечивает максимальную производительность и стабильность при запуске Standoff 2 с высоким FPS и минимальными задержками.</p>
-                    <a href="https://projectwest.site/link" class="btn btn-primary">
+                    <h2>Идеально для Standoff 2</h2>
+                    <p>WPlayer обеспечивает максимальную производительность и стабильность в Standoff 2, гарантируя высокий FPS и минимальные задержки для вашей победы.</p>
+                    <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                         Скачать WPlayer
                     </a>
                 </div>
@@ -1353,8 +1041,8 @@
         <section id="support" style="padding: 8rem 0; text-align: center;">
             <div class="container">
                 <div class="loading">
-                    <h2>Поддержка</h2>
-                    <p style="max-width: 700px; margin: 1rem auto;">Если у вас есть вопросы по установке или использованию эмулятора — свяжитесь с нами.</p>
+                    <h2>Свяжитесь с нами</h2>
+                    <p style="max-width: 700px; margin: 1rem auto;">Возникли вопросы по установке или использованию эмулятора? Мы всегда готовы помочь.</p>
                     <a href="https://t.me/projectwest" target="_blank" class="btn btn-secondary">Написать в Telegram</a>
                 </div>
             </div>
@@ -1364,40 +1052,13 @@
         <section id="donate" style="padding: 4rem 0; text-align: center;">
             <div class="container">
                 <div class="loading">
-                    <h2 style="margin-bottom: 1rem; color: var(--text-primary);">Поддержите проект</h2>
+                    <h2 style="margin-bottom: 1rem; color: var(--text-primary);">Поддержите развитие проекта</h2>
                     <p style="max-width: 600px; margin: 0 auto 2.5rem; color: var(--text-secondary); font-size: 1.1rem;">
-                        Помогите нам развивать WPlayer — ваш вклад делает эмулятор ещё быстрее и стабильнее.
+                        Ваш вклад помогает нам улучшать WPlayer, делая его еще быстрее, стабильнее и функциональнее.
                     </p>
-                    <div style="
-                        display: inline-block;
-                        background: rgba(255, 255, 255, 0.03);
-                        border: 1px solid var(--border);
-                        border-radius: 16px;
-                        padding: 1.5rem;
-                        backdrop-filter: blur(10px);
-                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                        transition: all 0.3s ease;
-                        max-width: 360px;
-                        width: 100%;
-                    "
-                    onmouseover="this.style.borderColor='var(--border-hover)'; this.style.transform='translateY(-2px)';"
-                    onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)';">
+                    <div class="content-box">
                         <form action="https://yoomoney.ru/to/4100118435390822" method="GET" style="margin: 0;">
-                            <button type="submit" style="
-                                background: #f05c4a;
-                                color: white;
-                                border: none;
-                                border-radius: 8px;
-                                padding: 12px 24px;
-                                font-size: 1rem;
-                                font-weight: 600;
-                                cursor: pointer;
-                                transition: all 0.3s ease;
-                                width: 100%;
-                                max-width: 300px;
-                                margin: 0 auto;
-                                display: block;
-                            ">
+                            <button type="submit" class="btn">
                                 💖 Поддержать проект
                             </button>
                         </form>
@@ -1411,13 +1072,13 @@
             <p>© 2025 Project West. Все права защищены.</p>
             <div class="footer-links">
                 <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer">Telegram</a>
-                <a href="https://projectwest.site/link">Скачать</a>
+                <a href="https://t.me/projectwest" target="_blank" rel="noopener noreferrer">Скачать</a> <!-- Updated link -->
                 <a href="https://clck.ru/3NaFDj">Поддержка</a>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase Authentication Script -->
+    <!-- Firebase Authentication Script (simplified) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import {
@@ -1432,17 +1093,6 @@
             ref,
             set,
             get,
-            push,
-            update,
-            remove,
-            onValue,
-            off,
-            query,
-            orderByChild,
-            equalTo,
-            onChildAdded,
-            onChildChanged,
-            onChildRemoved
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
@@ -1459,16 +1109,8 @@
         const database = getDatabase(app);
         const provider = new GoogleAuthProvider();
 
-        // Глобальные переменные для системы друзей
-        let currentUser = null;
         let userProfile = null;
-        let friendsList = [];
-        let friendRequests = [];
-        let currentChat = null;
-        let chatMessages = [];
-        let foundUser = null;
 
-        // Генерация уникального ID для пользователя
         function generateUserId() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let result = '';
@@ -1478,7 +1120,6 @@
             return result;
         }
 
-        // Создание или получение профиля пользователя
         async function createOrGetUserProfile(user) {
             const userRef = ref(database, `users/${user.uid}`);
             const snapshot = await get(userRef);
@@ -1494,220 +1135,9 @@
                     email: user.email,
                     photoURL: user.photoURL,
                     createdAt: new Date().toISOString(),
-                    friends: {},
-                    friendRequests: {},
-                    sentRequests: {}
                 };
                 await set(userRef, userProfile);
                 return userProfile;
-            }
-        }
-
-        // Функции для работы с друзьями
-        async function searchUserByID(userId) {
-            try {
-                const usersRef = ref(database, 'users');
-                const snapshot = await get(usersRef);
-                
-                if (snapshot.exists()) {
-                    const users = snapshot.val();
-                    for (let uid in users) {
-                        if (users[uid].userId === userId && uid !== currentUser.uid) {
-                            // Возвращаем объект с добавленным uid
-                            return {
-                                ...users[uid],
-                                uid: uid
-                            };
-                        }
-                    }
-                }
-                return null;
-            } catch (error) {
-                console.error('Ошибка поиска пользователя:', error);
-                return null;
-            }
-        }
-
-        async function sendFriendRequest(targetUser) {
-            try {
-                if (!targetUser || !targetUser.uid) {
-                    alert('Пользователь не найден');
-                    return;
-                }
-
-                const targetUserId = targetUser.uid;
-                const requestId = push(ref(database, 'friendRequests')).key;
-                
-                const request = {
-                    id: requestId,
-                    from: currentUser.uid,
-                    to: targetUserId,
-                    fromName: userProfile.displayName,
-                    fromPhoto: userProfile.photoURL,
-                    status: 'pending',
-                    createdAt: new Date().toISOString()
-                };
-
-                await set(ref(database, `friendRequests/${requestId}`), request);
-                await set(ref(database, `users/${targetUserId}/friendRequests/${requestId}`), true);
-                await set(ref(database, `users/${currentUser.uid}/sentRequests/${requestId}`), true);
-                
-                alert('Заявка в друзья отправлена!');
-            } catch (error) {
-                console.error('Ошибка отправки заявки:', error);
-                alert('Ошибка отправки заявки');
-            }
-        }
-
-        async function respondToFriendRequest(requestId, accept) {
-            try {
-                const requestRef = ref(database, `friendRequests/${requestId}`);
-                const requestSnapshot = await get(requestRef);
-                
-                if (!requestSnapshot.exists()) {
-                    alert('Заявка не найдена');
-                    return;
-                }
-
-                const request = requestSnapshot.val();
-                
-                if (accept) {
-                    // Добавляем в друзья
-                    await set(ref(database, `users/${currentUser.uid}/friends/${request.from}`), {
-                        uid: request.from,
-                        displayName: request.fromName,
-                        photoURL: request.fromPhoto,
-                        addedAt: new Date().toISOString()
-                    });
-                    
-                    await set(ref(database, `users/${request.from}/friends/${currentUser.uid}`), {
-                        uid: currentUser.uid,
-                        displayName: userProfile.displayName,
-                        photoURL: userProfile.photoURL,
-                        addedAt: new Date().toISOString()
-                    });
-                }
-
-                // Удаляем заявку
-                await remove(requestRef);
-                await remove(ref(database, `users/${currentUser.uid}/friendRequests/${requestId}`));
-                await remove(ref(database, `users/${request.from}/sentRequests/${requestId}`));
-                
-                loadFriendsAndRequests();
-                alert(accept ? 'Заявка принята!' : 'Заявка отклонена');
-            } catch (error) {
-                console.error('Ошибка обработки заявки:', error);
-                alert('Ошибка обработки заявки');
-            }
-        }
-
-        async function loadFriendsAndRequests() {
-            if (!currentUser) return;
-            
-            try {
-                const userRef = ref(database, `users/${currentUser.uid}`);
-                const snapshot = await get(userRef);
-                
-                if (snapshot.exists()) {
-                    const userData = snapshot.val();
-                    friendsList = userData.friends || {};
-                    friendRequests = userData.friendRequests || {};
-                }
-                
-                // Загружаем детали заявок
-                const requestsRef = ref(database, 'friendRequests');
-                const requestsSnapshot = await get(requestsRef);
-                const allRequests = requestsSnapshot.val() || {};
-                
-                const incomingRequests = [];
-                for (let requestId in allRequests) {
-                    if (allRequests[requestId].to === currentUser.uid && allRequests[requestId].status === 'pending') {
-                        incomingRequests.push(allRequests[requestId]);
-                    }
-                }
-                
-                friendRequests = incomingRequests;
-                updateFriendsUI();
-            } catch (error) {
-                console.error('Ошибка загрузки друзей:', error);
-            }
-        }
-
-        // Функции для работы с чатами
-        async function startChat(friendUid) {
-            try {
-                const chatId = [currentUser.uid, friendUid].sort().join('_');
-                currentChat = friendUid;
-                
-                // Загружаем сообщения чата
-                const messagesRef = ref(database, `chats/${chatId}/messages`);
-                onValue(messagesRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        chatMessages = Object.values(snapshot.val());
-                        updateChatUI();
-                    } else {
-                        chatMessages = [];
-                        updateChatUI();
-                    }
-                });
-                
-                showChatUI();
-            } catch (error) {
-                console.error('Ошибка открытия чата:', error);
-            }
-        }
-
-        async function sendMessage(text) {
-            if (!currentChat || !text.trim()) return;
-            
-            try {
-                const chatId = [currentUser.uid, currentChat].sort().join('_');
-                const messageRef = push(ref(database, `chats/${chatId}/messages`));
-                
-                const message = {
-                    id: messageRef.key,
-                    from: currentUser.uid,
-                    text: text.trim(),
-                    timestamp: new Date().toISOString(),
-                    edited: false,
-                    deleted: false
-                };
-                
-                await set(messageRef, message);
-            } catch (error) {
-                console.error('Ошибка отправки сообщения:', error);
-            }
-        }
-
-        async function editMessage(messageId, newText) {
-            if (!newText.trim()) return;
-            
-            try {
-                const chatId = [currentUser.uid, currentChat].sort().join('_');
-                const messageRef = ref(database, `chats/${chatId}/messages/${messageId}`);
-                
-                await update(messageRef, {
-                    text: newText.trim(),
-                    edited: true,
-                    editedAt: new Date().toISOString()
-                });
-            } catch (error) {
-                console.error('Ошибка редактирования сообщения:', error);
-            }
-        }
-
-        async function deleteMessage(messageId) {
-            try {
-                const chatId = [currentUser.uid, currentChat].sort().join('_');
-                const messageRef = ref(database, `chats/${chatId}/messages/${messageId}`);
-                
-                await update(messageRef, {
-                    text: 'Сообщение удалено',
-                    deleted: true,
-                    deletedAt: new Date().toISOString()
-                });
-            } catch (error) {
-                console.error('Ошибка удаления сообщения:', error);
             }
         }
 
@@ -1717,7 +1147,6 @@
         const renderAuthUI = async (user) => {
             authContainer.innerHTML = '';
             if (user) {
-                currentUser = user;
                 userProfile = await createOrGetUserProfile(user);
                 
                 const userMenu = document.createElement('div');
@@ -1733,11 +1162,10 @@
                                 <div class="dropdown-name">${user.displayName || 'Пользователь'}</div>
                                 <div class="dropdown-email">${user.email || ''}</div>
                                 <div class="dropdown-date" id="dropdownLoginDate"></div>
-                                <div class="dropdown-id" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem;">ID: ${userProfile.userId}</div>
+                                <div class="dropdown-id">ID: ${userProfile.userId}</div>
                             </div>
                         </div>
                         <div class="dropdown-separator"></div>
-                        <div class="dropdown-item" onclick="showFriendsSystem()">Друзья и чаты</div>
                         <div class="dropdown-item" onclick="logout()">Выйти</div>
                     </div>
                 `;
@@ -1760,236 +1188,37 @@
                 if (dateEl) dateEl.textContent = 'Дата входа: ' + lastLoginFormatted;
             } else {
                 const loginBtn = document.createElement('button');
-                loginBtn.textContent = 'Войти через Google';
-                loginBtn.style.padding = '0.5rem 1rem';
+                loginBtn.textContent = 'Войти';
+                loginBtn.style.padding = '0.6rem 1.2rem';
                 loginBtn.style.borderRadius = '50px';
                 loginBtn.style.border = '1px solid var(--border)';
                 loginBtn.style.background = 'rgba(255,255,255,0.05)';
                 loginBtn.style.color = 'var(--text-primary)';
                 loginBtn.style.cursor = 'pointer';
                 loginBtn.style.fontSize = '0.95rem';
+                loginBtn.style.fontWeight = '500';
+                loginBtn.style.transition = 'all 0.3s ease';
                 loginBtn.onclick = () => {
                     signInWithPopup(auth, provider).catch((error) => {
                         alert("Ошибка входа: " + error.message);
                     });
                 };
+                loginBtn.onmouseover = () => {
+                    loginBtn.style.borderColor = 'var(--accent)';
+                    loginBtn.style.background = 'rgba(255,107,0,0.1)';
+                    loginBtn.style.transform = 'translateY(-1px)';
+                };
+                loginBtn.onmouseout = () => {
+                    loginBtn.style.borderColor = 'var(--border)';
+                    loginBtn.style.background = 'rgba(255,255,255,0.05)';
+                    loginBtn.style.transform = 'translateY(0)';
+                };
                 authContainer.appendChild(loginBtn);
             }
         };
 
-        // UI функции
-        function updateFriendsUI() {
-            const friendsContainer = document.getElementById('friends-container');
-            if (!friendsContainer) return;
-
-            // Показываем друзей
-            const friendsListEl = document.getElementById('friends-list');
-            if (friendsListEl) {
-                friendsListEl.innerHTML = '';
-                Object.values(friendsList).forEach(friend => {
-                    const friendEl = document.createElement('div');
-                    friendEl.className = 'friend-item';
-                    friendEl.innerHTML = `
-                        <img src="${friend.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(friend.displayName) + '&background=111&color=fff'}" alt="Аватар" class="friend-avatar">
-                        <div class="friend-info">
-                            <div class="friend-name">${friend.displayName}</div>
-                            <div class="friend-status">В сети</div>
-                        </div>
-                        <button class="btn btn-primary" onclick="startChat('${friend.uid}')">Чат</button>
-                    `;
-                    friendsListEl.appendChild(friendEl);
-                });
-            }
-
-            // Показываем заявки
-            const requestsListEl = document.getElementById('requests-list');
-            if (requestsListEl) {
-                requestsListEl.innerHTML = '';
-                friendRequests.forEach(request => {
-                    const requestEl = document.createElement('div');
-                    requestEl.className = 'request-item';
-                    requestEl.innerHTML = `
-                        <img src="${request.fromPhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(request.fromName) + '&background=111&color=fff'}" alt="Аватар" class="request-avatar">
-                        <div class="request-info">
-                            <div class="request-name">${request.fromName}</div>
-                            <div class="request-time">${new Date(request.createdAt).toLocaleString('ru-RU')}</div>
-                        </div>
-                        <div class="request-actions">
-                            <button class="btn btn-primary" onclick="respondToFriendRequest('${request.id}', true)">Принять</button>
-                            <button class="btn btn-secondary" onclick="respondToFriendRequest('${request.id}', false)">Отклонить</button>
-                        </div>
-                    `;
-                    requestsListEl.appendChild(requestEl);
-                });
-            }
-        }
-
-        function updateChatUI() {
-            const messagesContainer = document.getElementById('messages-container');
-            if (!messagesContainer) return;
-
-            messagesContainer.innerHTML = '';
-            chatMessages.forEach(message => {
-                const messageEl = document.createElement('div');
-                messageEl.className = `message ${message.from === currentUser.uid ? 'own' : 'other'}`;
-                
-                const time = new Date(message.timestamp).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-                const editedText = message.edited ? ' (изменено)' : '';
-                const deletedText = message.deleted ? ' (удалено)' : '';
-                
-                messageEl.innerHTML = `
-                    <div class="message-content">
-                        <div class="message-text">${message.text}</div>
-                        <div class="message-time">${time}${editedText}${deletedText}</div>
-                    </div>
-                    ${message.from === currentUser.uid && !message.deleted ? `
-                        <div class="message-actions">
-                            <button onclick="editMessagePrompt('${message.id}', '${message.text.replace(/'/g, "\\'")}')">✏️</button>
-                            <button onclick="deleteMessage('${message.id}')">🗑️</button>
-                        </div>
-                    ` : ''}
-                `;
-                messagesContainer.appendChild(messageEl);
-            });
-
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        function showFriendsSystem() {
-            if (!currentUser) {
-                alert('Необходимо войти в систему');
-                return;
-            }
-
-            loadFriendsAndRequests();
-            
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Друзья и чаты</h2>
-                        <button class="close-btn" onclick="closeModal()">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="search-section">
-                            <h3>Поиск пользователя</h3>
-                            <div class="search-form">
-                                <input type="text" id="search-input" placeholder="Введите ID пользователя" maxlength="8">
-                                <button class="btn btn-primary" onclick="searchUser()">Найти</button>
-                            </div>
-                            <div id="search-result"></div>
-                        </div>
-                        
-                        <div class="requests-section">
-                            <h3>Заявки в друзья (${friendRequests.length})</h3>
-                            <div id="requests-list" class="requests-list"></div>
-                        </div>
-                        
-                        <div class="friends-section">
-                            <h3>Мои друзья (${Object.keys(friendsList).length})</h3>
-                            <div id="friends-list" class="friends-list"></div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-        }
-
-        function showChatUI() {
-            const friend = friendsList[currentChat];
-            if (!friend) return;
-
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay';
-            modal.innerHTML = `
-                <div class="modal-content chat-modal">
-                    <div class="modal-header">
-                        <div class="chat-header">
-                            <img src="${friend.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(friend.displayName) + '&background=111&color=fff'}" alt="Аватар" class="chat-avatar">
-                            <div class="chat-info">
-                                <div class="chat-name">${friend.displayName}</div>
-                                <div class="chat-status">В сети</div>
-                            </div>
-                        </div>
-                        <button class="close-btn" onclick="closeModal()">&times;</button>
-                    </div>
-                    <div class="chat-body">
-                        <div id="messages-container" class="messages-container"></div>
-                        <div class="message-input">
-                            <input type="text" id="message-input" placeholder="Введите сообщение..." maxlength="500">
-                            <button class="btn btn-primary" onclick="sendMessageFromInput()">Отправить</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            updateChatUI();
-            
-            // Обработчик Enter для отправки сообщения
-            document.getElementById('message-input').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendMessageFromInput();
-                }
-            });
-        }
-
-        // Глобальные функции для UI
-        window.showFriendsSystem = showFriendsSystem;
-        window.closeModal = () => {
-            const modal = document.querySelector('.modal-overlay');
-            if (modal) modal.remove();
-        };
-        window.searchUser = async () => {
-            const input = document.getElementById('search-input');
-            const userId = input.value.trim().toUpperCase();
-            
-            if (!userId) {
-                alert('Введите ID пользователя');
-                return;
-            }
-            
-            foundUser = await searchUserByID(userId);
-            const resultDiv = document.getElementById('search-result');
-            
-            if (foundUser) {
-                resultDiv.innerHTML = `
-                    <div class="search-result-item">
-                        <img src="${foundUser.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(foundUser.displayName) + '&background=111&color=fff'}" alt="Аватар" class="search-avatar">
-                        <div class="search-info">
-                            <div class="search-name">${foundUser.displayName}</div>
-                            <div class="search-id">ID: ${foundUser.userId}</div>
-                        </div>
-                        <button class="btn btn-primary" onclick="sendFriendRequest(foundUser)">Добавить в друзья</button>
-                    </div>
-                `;
-            } else {
-                resultDiv.innerHTML = '<div class="no-results">Пользователь не найден</div>';
-            }
-        };
-        window.sendMessageFromInput = () => {
-            const input = document.getElementById('message-input');
-            const text = input.value.trim();
-            if (text) {
-                sendMessage(text);
-                input.value = '';
-            }
-        };
-        window.editMessagePrompt = (messageId, currentText) => {
-            const newText = prompt('Редактировать сообщение:', currentText);
-            if (newText && newText !== currentText) {
-                editMessage(messageId, newText);
-            }
-        };
-        window.sendFriendRequest = sendFriendRequest;
-
         onAuthStateChanged(auth, (user) => {
             renderAuthUI(user);
-            if (user) {
-                loadFriendsAndRequests();
-            }
         });
 
         window.logout = () => {
@@ -2001,55 +1230,6 @@
             });
         };
     </script>
-
-    <!-- 
-    FIREBASE REALTIME DATABASE RULES
-    Скопируйте эти правила в Firebase Console > Realtime Database > Rules
-    
-    {
-      "rules": {
-        "users": {
-          "$uid": {
-            ".read": "auth != null && auth.uid == $uid",
-            ".write": "auth != null && auth.uid == $uid",
-            "friends": {
-              "$friendId": {
-                ".read": "auth != null && (auth.uid == $uid || auth.uid == $friendId)",
-                ".write": "auth != null && (auth.uid == $uid || auth.uid == $friendId)"
-              }
-            },
-            "friendRequests": {
-              ".read": "auth != null && auth.uid == $uid",
-              ".write": "auth != null && auth.uid == $uid"
-            },
-            "sentRequests": {
-              ".read": "auth != null && auth.uid == $uid",
-              ".write": "auth != null && auth.uid == $uid"
-            }
-          }
-        },
-        "friendRequests": {
-          "$requestId": {
-            ".read": "auth != null && (data.child('from').val() == auth.uid || data.child('to').val() == auth.uid)",
-            ".write": "auth != null && (data.child('from').val() == auth.uid || data.child('to').val() == auth.uid)"
-          }
-        },
-        "chats": {
-          "$chatId": {
-            ".read": "auth != null && (auth.uid == $chatId.split('_')[0] || auth.uid == $chatId.split('_')[1])",
-            ".write": "auth != null && (auth.uid == $chatId.split('_')[0] || auth.uid == $chatId.split('_')[1])",
-            "messages": {
-              "$messageId": {
-                ".read": "auth != null && (auth.uid == $chatId.split('_')[0] || auth.uid == $chatId.split('_')[1])",
-                ".write": "auth != null && (auth.uid == $chatId.split('_')[0] || auth.uid == $chatId.split('_')[1])",
-                ".validate": "newData.hasChildren(['id', 'from', 'text', 'timestamp']) && newData.child('from').val() == auth.uid"
-              }
-            }
-          }
-        }
-      }
-    }
-    -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2065,7 +1245,6 @@
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('navLinks');
             
-            // При клике только открываем/закрываем меню, без изменения вида иконки
             hamburger.addEventListener('click', function() {
                 navLinks.classList.toggle('active');
             });
@@ -2082,11 +1261,9 @@
             };
 
             const observer = new IntersectionObserver(function(entries) {
-                entries.forEach((entry, index) => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('loaded');
-                        }, index * 200);
+                        entry.target.classList.add('loaded');
                     }
                 });
             }, observerOptions);
@@ -2106,14 +1283,6 @@
                         });
                     }
                 });
-            });
-
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const geometricLines = document.querySelector('.geometric-lines');
-                if (geometricLines) {
-                    geometricLines.style.transform = `translateY(${scrolled * 0.1}px)`;
-                }
             });
 
             const grid = document.querySelector('.grid-overlay');
